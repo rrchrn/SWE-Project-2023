@@ -5,7 +5,6 @@ export default function ChatPage({navigation}) {
   return (
     <View style={styles.container}>
       <Text onPress={() => navigation.navigate('Home')}>Chat Page</Text>
-      <StatusBar style="auto" />
     </View>
   );
 }

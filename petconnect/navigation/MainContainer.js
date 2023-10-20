@@ -1,11 +1,52 @@
 import * as React from 'react';
-import { View } from 'react-native-web';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+//Screens
+import HomeScreen from './screens/HomeScreen';
+import UserProfile from './screens/UserProfile';
+import ChatPage from './screens/ChatPage';
+
+//Screen names
+
+const homeName = 'Home';
+const userPageName = 'User';
+const chatName = 'Chat';
+
+const Tab = createBottomTabNavigator();
 
 export default function MainContainer(){
     return (
-        <View></View>
-    )
+        <NavigationContainer>
+            <Tab.Navigator 
+            initialRouteName ={homeName}
+            screenOptions ={({route}) => ({
+                tabBarIcon: ({focused,color,size}) => {
+                    let iconName;
+                    let rn = route.name;
 
+                    if (rn === homeName)
+                    {
+                        iconName = focused ? 'home': 'home-outline'
+                    } else if (rn === userPageName)
+                    {
+                        iconName = focused ? 'list': 'list-outline'
+                    } else if (rn === chatName)
+                    {
+                        iconName = focused ? 'settings': 'settings-outline'
+                    }
+                    return <Ionicons name = {iconName} size = {size} color = {color}/>
+                }
+            })}>
+            
+            <Tab.Screen name ={homeName} component = {HomeScreen}/>
+            <Tab.Screen name ={userPageName} component = {UserProfile}/>
+            <Tab.Screen name ={chatName} component = {ChatPage}/>
+
+            </Tab.Navigator>
+        </NavigationContainer>
+    )
 
 }

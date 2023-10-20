@@ -5,7 +5,6 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Text onPress={() => alert("This is the Home Screen")}>Home Screen</Text>
-      <StatusBar style="auto" />
     </View>
   );
 }

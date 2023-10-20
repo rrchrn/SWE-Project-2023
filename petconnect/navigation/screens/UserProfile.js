@@ -5,7 +5,6 @@ export default function UserProfile({navigation}) {
   return (
     <View style={styles.container}>
       <Text onPress={() => navigation.navigate('Home')}>User Profile</Text>
-      <StatusBar style="auto" />
     </View>
   );
 }
