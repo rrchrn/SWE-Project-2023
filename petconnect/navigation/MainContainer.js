@@ -32,18 +32,19 @@ export default function MainContainer(){
                         iconName = focused ? 'home': 'home-outline'
                     } else if (rn === userPageName)
                     {
-                        iconName = focused ? 'list': 'list-outline'
+                        iconName = focused ? 'person': 'person-outline'
                     } else if (rn === chatName)
                     {
-                        iconName = focused ? 'settings': 'settings-outline'
+                        iconName = focused ? 'chatbubbles': 'chatbubbles-outline'
                     }
                     return <Ionicons name = {iconName} size = {size} color = {color}/>
                 }
             })}>
             
             <Tab.Screen name ={homeName} component = {HomeScreen}/>
-            <Tab.Screen name ={userPageName} component = {UserProfile}/>
             <Tab.Screen name ={chatName} component = {ChatPage}/>
+            <Tab.Screen name ={userPageName} component = {UserProfile}/>
+            
 
             </Tab.Navigator>
         </NavigationContainer>
