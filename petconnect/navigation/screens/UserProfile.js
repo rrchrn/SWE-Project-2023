@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function UserProfile({ navigation }) {
   // Sample user data, replace this with your actual user data
   const user = {
     name: 'Kyuji',
     age: 10,
-    bio: 'I love biting ankles and doggies!',
+    bio: 'I love biting ankles and doggies! owa owa frfrsssssssssssssssssssss',
     imageUrl: require('./shiba.png'), 
   };
   //
@@ -17,8 +18,16 @@ export default function UserProfile({ navigation }) {
       <Text style={styles.bio}>{user.bio}</Text>
 
       {/* Add buttons or links to edit the profile or perform other actions */}
-      <Button title="Edit Profile" onPress={() => navigation.navigate('EditProfile')} />
-      <Button title="Logout" onPress={() => navigation.navigate('Logout')} />
+     
+      <View style={styles.BtnWrapper}>
+        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Edit')}}>
+          <Text style={styles.userBtnTxt}>Edit Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Likes');}}>
+          <Text style={styles.userBtnTxt}>View Likes</Text>
+        </TouchableOpacity>
+      </View>
+      
     </View>
   );
 }
@@ -28,7 +37,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
+    padding: 20,
   },
   profileImage: {
     width: 150,
@@ -42,6 +52,25 @@ const styles = StyleSheet.create({
   },
   bio: {
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 30,
+    marginBottom:30,
+  },
+  Btn: {
+    //borderColor: '#2e64e5',
+    borderColor: '#B200ED',
+    borderWidth: 2,
+    borderRadius: 3,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
+  },
+  userBtnTxt: {
+    color: '#B200ED',
+  },
+  BtnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 10,
   },
 });

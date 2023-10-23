@@ -8,12 +8,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import UserProfile from './screens/UserProfile';
 import ChatPage from './screens/ChatPage';
-
+import LikesPage from './screens/LikesPage';
+import EditPage from './screens/EditUserProfile';
 //Screen names
 
 const homeName = 'Home';
 const userPageName = 'User';
 const chatName = 'Chat';
+const likesName = 'Likes';
+const editUser = 'Edit';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,8 +47,8 @@ export default function MainContainer(){
             <Tab.Screen name ={homeName} component = {HomeScreen}/>
             <Tab.Screen name ={chatName} component = {ChatPage}/>
             <Tab.Screen name ={userPageName} component = {UserProfile}/>
-            
-
+            <Tab.Screen name={likesName} component={LikesPage} options={{ tabBarButton: () => null }} />
+            <Tab.Screen name={editUser} component={EditPage} options={{ tabBarButton: () => null }} />
             </Tab.Navigator>
         </NavigationContainer>
     )
