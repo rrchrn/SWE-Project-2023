@@ -1,9 +1,6 @@
 import { View, Image, TouchableOpacity, Text, StyleSheet, Button } from 'react-native';
 import React, { useState } from 'react';
 
-
-
-
 const LoginScreen = () => {
   return (
     <View style={styles.container}>

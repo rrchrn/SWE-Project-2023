@@ -1,5 +1,8 @@
 import * as React from 'react';
 import MainContainer from './navigation/MainContainer';
+import { AppRegistry } from 'react-native';
+AppRegistry.registerComponent('YourAppName', () => App);
+
 
 function App(){
   return (
