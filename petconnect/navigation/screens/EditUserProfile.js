@@ -17,7 +17,7 @@ export default function EditUserPage() {
             <View style={{alignItems: 'center'}}>
                 <TouchableOpacity onPress={()=>{}}>
                     <View style={styles.pc}>
-                       <ImageBackground source={require('./shiba.png')} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 50 }}>
+                       <ImageBackground source={user.imageUrl} style={{ height: 100, width: 100 }} imageStyle={{ borderRadius: 50 }}>
                             <View style = {styles.cameraIconContainer}>
                                 <Icon name="camera" size={35} color="#fff" style={styles.cameraIcon}>
 
