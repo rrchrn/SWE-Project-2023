@@ -3,10 +3,19 @@
 # dependencies
 node_modules/
 
+android/
+ios/
 # Expo
 .expo/
 dist/
 web-build/
+
+# Ignore lock files (package-lock.json or yarn.lock)
+package-lock.json
+
+# Ignore any generated files and directories related to Metro bundler
+metro-config.js
+metro.config.js
 
 # Native
 *.orig.*
@@ -33,3 +42,13 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+# Ignore Android and iOS binary files
+*.apk
+*.aab
+*.ipa
+*.xcworkspace
+*.xcuserdatad
+
+# Ignore log files
+npm-debug.log
+yarn-error.log
