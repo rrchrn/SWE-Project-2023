@@ -20,11 +20,11 @@ export default function UserProfile({ navigation }) {
       {/* Add buttons or links to edit the profile or perform other actions */}
      
       <View style={styles.BtnWrapper}>
-        <TouchableOpacity style = {styles.Btn} onPress={()=>{}}>
-          <Text style={styles.userBtnTxt}>EDIT PROFILE</Text>
+        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Edit')}}>
+          <Text style={styles.userBtnTxt}>Edit Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style = {styles.Btn} onPress={()=>{}}>
-          <Text style={styles.userBtnTxt}>Likes</Text>
+        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Likes');}}>
+          <Text style={styles.userBtnTxt}>View Likes</Text>
         </TouchableOpacity>
       </View>
       
@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   bio: {
     fontSize: 16,
-    marginTop: 1,
+    marginTop: 30,
+    marginBottom:30,
   },
   Btn: {
     //borderColor: '#2e64e5',
