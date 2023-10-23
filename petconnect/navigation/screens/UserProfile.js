@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 export default function UserProfile({ navigation }) {
   // Sample user data, replace this with your actual user data
   const user = {
@@ -13,7 +14,7 @@ export default function UserProfile({ navigation }) {
   //
   return (
     <View style={styles.container}>
-      <Image source={{ uri: user.imageUrl }} style={styles.profileImage} />
+      <Image source={user.imageUrl} style={styles.profileImage} />
       <Text style={styles.name}>{user.name}, {user.age}</Text>
       <Text style={styles.bio}>{user.bio}</Text>
 
