@@ -24,9 +24,9 @@ export default function HomeScreen({ navigation }) {
       <Text style = {styles.maintext}>PetConnect</Text>
       <View>
         <Image source={currentPet.image} style={styles.petImage} />
-        <Text>Name: {currentPet.name}</Text>
-        <Text>Age: {currentPet.age}</Text>
-        <Text>Sex: {currentPet.sex}</Text>
+        <Text style = {styles.nametext}>Name: {currentPet.name}</Text>
+        <Text style = {styles.text}>Age: {currentPet.age}</Text>
+        <Text style = {styles.text}>Sex: {currentPet.sex}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style = {styles.dislike} onPress={handleDislike}>
             <Ionicons name = "thumbs-down-outline" size = {50}/>
@@ -67,11 +67,19 @@ const styles = StyleSheet.create({
 
   },
   dislike: {
-    paddingRight: 20
+    paddingRight: 25
     
 
   },
   maintext: {
-    paddingBottom: 30
+    paddingBottom: 35,
+    fontSize: 30
+  },
+  nametext: {
+    paddingTop: 20,
+    textAlign: 'center'
+  },
+  text : {
+    textAlign: 'center'
   }
 });
