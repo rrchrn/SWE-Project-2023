@@ -37,7 +37,12 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
+# local env filesx
+# Ignore platform-specific build and configuration files
+android/
+ios/
+
+
 .env*.local
 
 # typescript
