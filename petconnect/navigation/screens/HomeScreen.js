@@ -3,20 +3,54 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function HomeScreen({ navigation }) {
-  const [currentPet, setCurrentPet] = useState({
-    name: 'Buddy',
-    age: '2 years',
-    sex: 'Male',
-    image: require('./dog3.jpg'),
-  });
+  const availablePets = [
+    {
+      name: 'Buddy',
+      age: '2 years',
+      sex: 'Male',
+      image: require('./dog3.jpg'),
+    },
+    {
+      name: 'Darren',
+      age: '9 years',
+      sex: 'Male',
+      image: require('./dog2.jpg'),
+    },
+    {
+      name: 'Lily',
+      age: '3 years',
+      sex: 'Female',
+      image: require('./dog1.jpg'),
+    },
+    {
+      name: 'Ashley',
+      age: '4 years',
+      sex: 'Female',
+      image: require('./dog4.jpg'),
+    }
+  ];
+
+  const [currentPetIndex, setCurrentPetIndex] = useState(0);
+
+  const currentPet = availablePets[currentPetIndex];
+
+  const showNextPet = () => {
+    // Display the next pet profile
+    if (currentPetIndex < availablePets.length - 1) {
+      setCurrentPetIndex(currentPetIndex + 1);
+    } else {
+      // If all pets have been shown, navigate to the 'LikesPage'
+      navigation.navigate('Likes');
+    }
+  };
 
   const handleLike = () => {
-    // Save the current pet profile to the 'Liked' page (you need to implement this)
-    // Display a new pet profile (update the 'currentPet' state)
+    // Add the liked pet to the 'likedPets' state
+    showNextPet();
   };
 
   const handleDislike = () => {
-    // Display a new pet profile (update the 'currentPet' state)
+    showNextPet();
   };
 
   return (
