@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Button, TouchableOpacity,TextInput } fro
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+
 export default function UserProfile({ navigation }) {
   // Sample user data, replace this with your actual user data
   const user = {
