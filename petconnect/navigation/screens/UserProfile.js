@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TouchableOpacity,TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function UserProfile({ navigation }) {
   // Sample user data, replace this with your actual user data
@@ -13,9 +14,19 @@ export default function UserProfile({ navigation }) {
   //
   return (
     <View style={styles.container}>
-      <Image source={{ uri: user.imageUrl }} style={styles.profileImage} />
+      <Image source={user.imageUrl} style={styles.profileImage} />
       <Text style={styles.name}>{user.name}, {user.age}</Text>
+      <View style = {styles.action} >
+        <FontAwesome name="paw" size={20}/>
+        <TextInput
+        placeholder='First Name'
+        placeholderTextColor='#666666'
+        autoCorrect={false}
+        
+        />
+      </View>
       <Text style={styles.bio}>{user.bio}</Text>
+      
 
       {/* Add buttons or links to edit the profile or perform other actions */}
      
@@ -72,5 +83,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     marginBottom: 10,
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight:200,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    paddingLeft: 10,
+    color: '#333333',
   },
 });
