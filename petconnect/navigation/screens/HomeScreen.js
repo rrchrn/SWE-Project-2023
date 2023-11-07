@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, ScrollView, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function HomeScreen({ navigation }) {
@@ -63,48 +63,46 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.container}>
-        <Text style={styles.maintext}>PetConnect</Text>
-        <View style={styles.card}>
-          <TouchableOpacity onPress={openModal}>
-            <Image source={currentPet.image} style={styles.petImage} />
-            <Text style={styles.nametext}>Name: {currentPet.name}</Text>
-            <Text style={styles.text}>Age: {currentPet.age}</Text>
-            <Text style={styles.text}>Sex: {currentPet.sex}</Text>
-          </TouchableOpacity>
-        </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={closeModal}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Name: {currentPet.name}</Text>
-              <Text style={styles.modalText}>Age: {currentPet.age}</Text>
-              <Text style={styles.modalText}>Sex: {currentPet.sex}</Text>
-              <Text style={styles.modalText}>Additional info: Lorem ipsum...</Text>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonClose]}
-                onPress={closeModal}
-              >
-                <Text style={styles.textStyle}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-        <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
-          <Ionicons name="thumbs-down-outline" size={50} />
+    <View style={styles.container}>
+      <Text style={styles.maintext}>PetConnect</Text>
+      <View style={styles.card}>
+        <TouchableOpacity onPress={openModal}>
+          <Image source={currentPet.image} style={styles.petImage} />
+          <Text style={styles.nametext}>Name: {currentPet.name}</Text>
+          <Text style={styles.text}>Age: {currentPet.age}</Text>
+          <Text style={styles.text}>Sex: {currentPet.sex}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.like} onPress={handleLike}>
-          <Ionicons name="thumbs-up-outline" size={50} />
-        </TouchableOpacity>
-        </View>
       </View>
-    </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Name: {currentPet.name}</Text>
+            <Text style={styles.modalText}>Age: {currentPet.age}</Text>
+            <Text style={styles.modalText}>Sex: {currentPet.sex}</Text>
+            <Text style={styles.modalText}>Additional info: Lorem ipsum...</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={closeModal}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
+        <Ionicons name="thumbs-down-outline" size={50} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.like} onPress={handleLike}>
+        <Ionicons name="thumbs-up-outline" size={50} />
+      </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -112,10 +110,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     borderRadius: 8,
-    padding: 16,
+    padding: 20,
     alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -152,7 +148,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   maintext: {
-    paddingBottom: 35,
+    paddingBottom: 10,
     fontSize: 30
   },
   nametext: {
