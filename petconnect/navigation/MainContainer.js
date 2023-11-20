@@ -25,7 +25,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainContainer(){
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 //     React.useEffect(() => {
 //     // Check the user's authentication status, e.g., by reading from AsyncStorage or a state management system.
