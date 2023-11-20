@@ -1,49 +1,78 @@
-import { View, Image, TouchableOpacity, Text, StyleSheet, Button } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import React from 'react'
 
 const LoginScreen = () => {
   return (
-    <View style={styles.container}>
-      {/* Logo */}
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('./assets/shiba.jpg')} // Replace with your logo image path
-          style={styles.logo}
-        />
-      </View>
+   <KeyboardAvoidingView
+      style={styles.container} 
+      behavior='padding' >
+    <View 
+      style = {styles.inputcontainer}>
+      <TextInput 
+        placeholder='Email' 
+        /*value={} 
+        onChangeText={text => }*/ 
+        style = {styles.input} 
+        placeholderTextColor="#000">
 
-      {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
+      </TextInput>
+      <TextInput 
+        placeholder='Password' 
+        /*value={} 
+        onChangeText={text => }*/ 
+        style = {styles.input} 
+        secureTextEntry 
+        placeholderTextColor="#000">
+      </TextInput>
+    </View>
+    <View style = {styles.buttonContainer}>
+      <TouchableOpacity
+        onPress={()=> { }}
+        style={styles.button}
+      >
+       <Text style={styles.buttonText}>Login</Text> 
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={()=> { }}
+        style={[styles.button, styles.buttonOutline]}
+      >
+       <Text style={[styles.buttonOutlineText]}>Register</Text> 
       </TouchableOpacity>
     </View>
-  );
-};
+   </KeyboardAvoidingView>
+  )
+}
+
+export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff', // Set your background color
   },
-  logoContainer: {
-    alignItems: 'center',
-  },
-  logo: {
-    width: 150, // Adjust the width and height based on your logo size
-    height: 150,
-  },
-  loginButton: {
-    backgroundColor: '#007bff', // Button background color
-    padding: 15,
-    marginTop: 20,
-    borderRadius: 8,
-  },
-  loginButtonText: {
-    color: '#fff', // Button text color
-    fontSize: 18,
-  },
-});
+  container: {
 
-export default LoginScreen;
+  },
+  inputcontainer: {
+
+  },
+  input: {
+
+  },
+  buttonContainer: {
+
+  },
+  button: {
+
+  },
+  buttonText: {
+
+  },
+  buttonOutline: {
+    
+  },
+  buttonOutlineText: {
+
+  },
+})
