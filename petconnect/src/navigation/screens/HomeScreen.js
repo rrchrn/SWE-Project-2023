@@ -8,25 +8,25 @@ export default function HomeScreen({ navigation }) {
       name: 'Buddy',
       age: '2 years',
       sex: 'Male',
-      image: require('./dog3.jpg'),
+      image: require('./images/dog3.jpg'),
     },
     {
       name: 'Darren',
       age: '9 years',
       sex: 'Male',
-      image: require('./dog2.jpg'),
+      image: require('./images/dog2.jpg'),
     },
     {
       name: 'Lily',
       age: '3 years',
       sex: 'Female',
-      image: require('./dog1.jpg'),
+      image: require('./images/dog1.jpg'),
     },
     {
       name: 'Ashley',
       age: '4 years',
       sex: 'Female',
-      image: require('./dog4.jpg'),
+      image: require('./images/dog4.jpg'),
     }
   ];
 
