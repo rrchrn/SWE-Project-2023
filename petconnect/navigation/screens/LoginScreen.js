@@ -14,16 +14,16 @@ const LoginScreen = () => {
       style = {styles.inputcontainer}>
       <TextInput 
         placeholder='Email' 
-        /*value={} 
-        onChangeText={text => }*/ 
+        value={email} 
+        onChangeText={text => setEmail(text) } 
         style = {styles.input} 
         placeholderTextColor="#000">
 
       </TextInput>
       <TextInput 
         placeholder='Password' 
-        /*value={} 
-        onChangeText={text => }*/ 
+        value={password} 
+        onChangeText={text => setPassword(text)} 
         style = {styles.input} 
         secureTextEntry 
         placeholderTextColor="#000">
