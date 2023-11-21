@@ -12,7 +12,7 @@ import ChatPage from './screens/ChatPage';
 import LikesPage from './screens/LikesPage';
 import EditPage from './screens/EditUserProfile';
 import LoginScreen from './screens/LoginScreen';
-import {auth} from '../firebase'
+import {auth} from '../firebase.ignore.js'
 
 //Screen names
 const homeName = 'Home';
