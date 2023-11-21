@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import {auth} from '../../firebase'
+import {auth} from '../../firebase.ignore.js'
 import { useNavigation } from '@react-navigation/native'
 
 const LoginScreen = () => {
