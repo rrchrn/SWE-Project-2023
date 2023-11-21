@@ -10,18 +10,19 @@ export default function UserProfile({ navigation }) {
     name: 'Kyuji',
     age: 5,
     bio: 'Hi my name is Kyuji the Shiba. I love biting ankles and doggies. Please have a fun playdate with me and my human ',
-    imageUrl: require('./shiba.png'), 
+    imageUrl: require('./images/shiba.png'), 
     sex:'Male',
     breed:'shiba inu',
     nature:'Timid',
     from:'Arlington Texas',
-    photos: [require('./shiba2.png'), 
-    require('./shiba3.png'), 
-    require('./shiba4.png'),
-    require('./shiba5.png'),
-    require('./shiba6.png'),
-    require('./shiba7.png')],
+    photos: [require('./images/shiba2.png'), 
+    require('./images/shiba3.png'), 
+    require('./images/shiba4.png'),
+    require('./images/shiba5.png'),
+    require('./images/shiba6.png'),
+    require('./images/shiba7.png')],
   };
+
   //
   return (
     <View style={styles.container}>

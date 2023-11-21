@@ -1,18 +1,18 @@
-import * as React from 'react';
 import { View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 //Screens
-import HomeScreen from './screens/HomeScreen';
-import UserProfile from './screens/UserProfile';
-import ChatPage from './screens/ChatPage';
-import LikesPage from './screens/LikesPage';
-import EditPage from './screens/EditUserProfile';
-import LoginScreen from './screens/LoginScreen';
-import {auth} from '../firebase.ignore.js'
+import HomeScreen from './screens/HomeScreen.js';
+import UserProfile from './screens/UserProfile.js';
+import ChatPage from './screens/ChatPage.js';
+import EditPage from './screens/EditUserProfile.js';
+import LoginScreen from './screens/LoginScreen.js';
+import LikesPage from './screens/LikesPage.js';
+import {auth} from '../../firebase.ignore.js'
 
 //Screen names
 const homeName = 'Home';
