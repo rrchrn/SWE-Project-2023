@@ -36,6 +36,7 @@ const LoginScreen = () => {
       behavior='padding' >
     <View 
       style = {styles.inputcontainer}>
+      <View><Text>Image</Text></View>
       <TextInput 
         placeholder='Email' 
         value={email} 
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#BBBEFE',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -112,13 +113,13 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: '#BBBEFE',
     borderWidth: 2,
 
     
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#BBBEFE',
     fontWeight: 700,
     fontSize: 16,
 
