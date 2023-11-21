@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,8 +12,9 @@ import ChatPage from './screens/ChatPage';
 import LikesPage from './screens/LikesPage';
 import EditPage from './screens/EditUserProfile';
 import LoginScreen from './screens/LoginScreen';
-//Screen names
+import {auth} from '../firebase'
 
+//Screen names
 const homeName = 'Home';
 const userPageName = 'User';
 const chatName = 'Chat';
@@ -27,19 +28,19 @@ export default function MainContainer(){
 
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-//     React.useEffect(() => {
-//     // Check the user's authentication status, e.g., by reading from AsyncStorage or a state management system.
-//     // Set the isLoggedIn state accordingly.
-//     // You might want to implement a more robust authentication check here.
-//     AsyncStorage.getItem('userToken')
-//       .then(token => {
-//         if (token) {
-//           setIsLoggedIn(true);
-//         } else {
-//           setIsLoggedIn(false);
-//         }
-//       });
-//   }, []);
+      React.useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+
 
     return (
        <NavigationContainer>
