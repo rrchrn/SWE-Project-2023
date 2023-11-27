@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { createStackNavigator } from '@react-navigation/stack';
 
 //Screens
 import HomeScreen from './screens/HomeScreen';
@@ -25,7 +25,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainContainer(){
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 //     React.useEffect(() => {
 //     // Check the user's authentication status, e.g., by reading from AsyncStorage or a state management system.
@@ -67,6 +67,7 @@ export default function MainContainer(){
             <Tab.Screen name={userPageName} component={UserProfile} />
             <Tab.Screen name={likesName} component={LikesPage} options={{ tabBarButton: () => null }} />
             <Tab.Screen name={editUser} component={EditPage} options={{ tabBarButton: () => null }} />
+            
           </>
         ) : (
           <Tab.Screen name={loginpage} component={LoginScreen} />

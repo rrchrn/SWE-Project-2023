@@ -10,6 +10,9 @@ ios/
 dist/
 web-build/
 
+
+*.ignore.js
+
 # Ignore lock files (package-lock.json or yarn.lock)
 package-lock.json
 
