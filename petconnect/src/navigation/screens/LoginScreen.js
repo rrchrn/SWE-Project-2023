@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {auth} from '../../../firebase.ignore.js'
 import { useNavigation } from '@react-navigation/native'
@@ -36,7 +36,10 @@ const LoginScreen = () => {
       behavior='padding' >
     <View 
       style = {styles.inputcontainer}>
-      <View><Text>Image</Text></View>
+      <View>
+        <Image source={require('./images/dogcatlogo.png')} style={styles.image}/> 
+        <Text style={styles.header}>PetConnect</Text>
+      </View>
       <TextInput 
         placeholder='Email' 
         value={email} 
@@ -82,6 +85,16 @@ const styles = StyleSheet.create({
   },
   inputcontainer: {
     width:'80%',
+  },
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    paddingTop: 20,
+  },
+  image: {
+    alignSelf: 'center',
+    width: 200,
+    height: 200,
   },
   input: {
     backgroundColor: 'white',
