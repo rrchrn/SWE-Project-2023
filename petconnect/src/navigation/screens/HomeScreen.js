@@ -68,9 +68,17 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.card}>
         <TouchableOpacity onPress={openModal}>
           <Image source={currentPet.image} style={styles.petImage} />
-          <Text style={styles.nametext}>Name: {currentPet.name}</Text>
-          <Text style={styles.text}>Age: {currentPet.age}</Text>
-          <Text style={styles.text}>Sex: {currentPet.sex}</Text>
+          <Text style={styles.nametext}>{currentPet.name}</Text>
+          <Text style={styles.text}>{currentPet.age}</Text>
+          <Text style={styles.text}>{currentPet.sex}</Text>
+          <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
+            <Ionicons name="heart-dislike-outline" size={50} color="red"/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.like} onPress={handleLike}>
+            <Ionicons name="heart-outline" size={50} color="green"/>
+          </TouchableOpacity>
+          </View>
         </TouchableOpacity>
       </View>
       <Modal
@@ -94,14 +102,6 @@ export default function HomeScreen({ navigation }) {
           </View>
         </View>
       </Modal>
-      <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
-        <Ionicons name="thumbs-down-outline" size={50} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.like} onPress={handleLike}>
-        <Ionicons name="thumbs-up-outline" size={50} />
-      </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -117,9 +117,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
+    shadowOpacity: 0.25,
+    shadowRadius: 2.25,
   },
   container: {
     flex: 1,
@@ -137,22 +136,25 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: 0,
     alignItems: 'center', 
     justifyContent: 'center', 
   },
   like: {
     marginHorizontal: 20,
+    paddingTop: 15,
   },
   dislike: {
     marginHorizontal: 20,
+    paddingTop: 15,
   },
   maintext: {
     paddingBottom: 10,
     fontSize: 30
   },
   nametext: {
-    paddingTop: 20,
+    paddingTop: 10,
+    fontSize: 20,
     textAlign: 'center'
   },
   text : {

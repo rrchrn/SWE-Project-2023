@@ -59,3 +59,5 @@ ios/
 # Ignore log files
 npm-debug.log
 yarn-error.log
+
+.ignore.js
