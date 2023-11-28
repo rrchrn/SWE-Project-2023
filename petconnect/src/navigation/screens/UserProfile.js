@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity,TextInput,FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {auth} from "../../../firebase.ignore"
 
 
 export default function UserProfile({ navigation }) {
@@ -24,6 +25,16 @@ export default function UserProfile({ navigation }) {
   };
 
   //
+    const handleSignOut = () => {
+      auth.
+      signOut()
+      .then( userCredentials => {
+        console.log('Signed out ' + user.email);
+      })
+      .catch(error => alert(error.message))
+    }
+
+  
   return (
     <View style={styles.container}>
       <Image source={user.imageUrl} style={styles.profileImage} />
@@ -45,6 +56,9 @@ export default function UserProfile({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Likes');}}>
           <Text style={styles.userBtnTxt}>View Likes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style = {styles.Btn} onPress={handleSignOut}>
+          <Text style={styles.userBtnTxt}>Sign Out</Text>
         </TouchableOpacity>
       </View>
 
