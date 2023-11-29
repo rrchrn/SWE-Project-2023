@@ -4,37 +4,40 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {auth} from "../../../firebase.ignore"
 
-
 export default function UserProfile({ navigation }) {
   // Sample user data, replace this with your actual user data
+
+  const currentUser = auth.currentUser;
+
   const user = {
-    name: 'Kyuji',
+    name: "Dog",
     age: 5,
     bio: 'Hi my name is Kyuji the Shiba. I love biting ankles and doggies. Please have a fun playdate with me and my human ',
-    imageUrl: require('./images/shiba.png'), 
-    sex:'Male',
-    breed:'shiba inu',
-    nature:'Timid',
-    from:'Arlington Texas',
-    photos: [require('./images/shiba2.png'), 
-    require('./images/shiba3.png'), 
-    require('./images/shiba4.png'),
-    require('./images/shiba5.png'),
-    require('./images/shiba6.png'),
-    require('./images/shiba7.png')],
+    imageUrl: require('./images/shiba.png'),
+    sex: 'Male',
+    breed: 'shiba inu',
+    nature: 'Timid',
+    from: 'Arlington Texas',
+    email: currentUser ? currentUser.email : "", // Add the user's email to the user object if logged in
+    photos: [
+      require('./images/shiba2.png'),
+      require('./images/shiba3.png'),
+      require('./images/shiba4.png'),
+      require('./images/shiba5.png'),
+      require('./images/shiba6.png'),
+      require('./images/shiba7.png')
+    ],
   };
 
-  //
-    const handleSignOut = () => {
-      auth.
-      signOut()
-      .then( userCredentials => {
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(userCredentials => {
         console.log('Signed out ' + user.email);
       })
       .catch(error => alert(error.message))
-    }
+  }
 
-  
   return (
     <View style={styles.container}>
       <Image source={user.imageUrl} style={styles.profileImage} />
@@ -44,20 +47,18 @@ export default function UserProfile({ navigation }) {
         <FontAwesome name="location-arrow" size={20} style={styles.fromIcon} />
         <Text style={styles.fromText}>{user.from}</Text>
       </View>
-      
+      {currentUser ? <Text style={styles.email}>{user.email}</Text> : null}
       <Text style={styles.bio}>{user.bio}</Text>
-      
 
       {/* Add buttons or links to edit the profile or perform other actions */}
-     
       <View style={styles.BtnWrapper}>
-        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Edit')}}>
+        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Edit') }}>
           <Text style={styles.userBtnTxt}>Edit Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style = {styles.Btn} onPress={()=>{navigation.navigate('Likes');}}>
+        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Likes'); }}>
           <Text style={styles.userBtnTxt}>View Likes</Text>
         </TouchableOpacity>
-        <TouchableOpacity style = {styles.Btn} onPress={handleSignOut}>
+        <TouchableOpacity style={styles.Btn} onPress={handleSignOut}>
           <Text style={styles.userBtnTxt}>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -72,6 +73,7 @@ export default function UserProfile({ navigation }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

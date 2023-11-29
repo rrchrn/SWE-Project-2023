@@ -28,6 +28,7 @@ const Stack = createStackNavigator(); // Create a Stack.Navigator
 export default function MainContainer() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
+  // 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
