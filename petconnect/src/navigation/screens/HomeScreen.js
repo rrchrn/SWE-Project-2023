@@ -1,43 +1,28 @@
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import petProfiles from './images/petProfiles.json';
 
 export default function HomeScreen({ navigation }) {
-  const availablePets = [
-    {
-      name: 'Buddy',
-      age: '2 years',
-      sex: 'Male',
-      image: require('./images/dog3.jpg'),
-    },
-    {
-      name: 'Darren',
-      age: '9 years',
-      sex: 'Male',
-      image: require('./images/dog2.jpg'),
-    },
-    {
-      name: 'Lily',
-      age: '3 years',
-      sex: 'Female',
-      image: require('./images/dog1.jpg'),
-    },
-    {
-      name: 'Ashley',
-      age: '4 years',
-      sex: 'Female',
-      image: require('./images/dog4.jpg'),
-    }
-  ];
-
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const currentPet = availablePets[currentPetIndex];
+  const currentPet = petProfiles[currentPetIndex];
+
+  const petImages = {
+    'dog1.jpg': require('./images/dog1.jpg'),
+    'dog2.jpg': require('./images/dog2.jpg'),
+    'dog3.jpg': require('./images/dog3.jpg'),
+    'dog4.jpg': require('./images/dog4.jpg'),
+    'cat1.jpg': require('./images/cat1.jpg'),
+    'cat2.jpg': require('./images/cat2.jpg'),
+    'cat3.jpg': require('./images/cat3.jpg'),
+    'cat4.jpg': require('./images/cat4.jpg'),
+  };
 
   const showNextPet = () => {
-    // Display the next pet profile
-    if (currentPetIndex < availablePets.length - 1) {
+    // Use petProfiles.length instead of availablePets.length
+    if (currentPetIndex < petProfiles.length - 1) {
       setCurrentPetIndex(currentPetIndex + 1);
     } else {
       // If all pets have been shown, navigate to the 'LikesPage'
@@ -67,18 +52,18 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.maintext}>PetConnect</Text>
       <View style={styles.card}>
         <TouchableOpacity onPress={openModal}>
-          <Image source={currentPet.image} style={styles.petImage} />
+          <Image source={petImages[currentPet.image]} style={styles.petImage} />
           <Text style={styles.nametext}>{currentPet.name}</Text>
           <Text style={styles.text}>{currentPet.age}</Text>
           <Text style={styles.text}>{currentPet.sex}</Text>
-          <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
-            <Ionicons name="heart-dislike-outline" size={50} color="red"/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.like} onPress={handleLike}>
-            <Ionicons name="heart-outline" size={50} color="green"/>
-          </TouchableOpacity>
-          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
+          <Ionicons name="heart-dislike-circle-outline" size={75} color="#fd7076"/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.like} onPress={handleLike}>
+          <Ionicons name="heart-circle-outline" size={75} color="#76fd70"/>
         </TouchableOpacity>
       </View>
       <Modal
@@ -103,14 +88,14 @@ export default function HomeScreen({ navigation }) {
         </View>
       </Modal>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     borderRadius: 8,
-    padding: 20,
+    padding: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -138,15 +123,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 0,
     alignItems: 'center', 
-    justifyContent: 'center', 
+    justifyContent: 'center'
   },
   like: {
-    marginHorizontal: 20,
-    paddingTop: 15,
+    marginHorizontal: 10,
+    padding: 5
   },
   dislike: {
-    marginHorizontal: 20,
-    paddingTop: 15,
+    marginHorizontal: 17,
+    padding: 5
   },
   maintext: {
     paddingBottom: 10,
@@ -155,10 +140,12 @@ const styles = StyleSheet.create({
   nametext: {
     paddingTop: 10,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'left',
+    fontWeight: '500'
   },
   text : {
-    textAlign: 'center'
+    textAlign: 'left',
+    fontWeight: '300'
   },
   centeredView: {
     flex: 1,
@@ -187,7 +174,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#7076fd',
   },
   textStyle: {
     color: 'white',

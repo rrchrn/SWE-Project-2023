@@ -60,6 +60,8 @@ export default function MainContainer() {
               }
               return <Ionicons name={iconName} size={size} color={color} />;
             },
+            tabBarActiveTintColor: '#7076fd',
+            //tabBarStyle: {backgroundColor: '#edeeff'}
           })}>
           <Tab.Screen name={homeName} component={HomeScreen} />
           <Tab.Screen name={chatName} component={ChatPage} />
