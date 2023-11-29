@@ -9,7 +9,7 @@ export default function EditUserPage() {
         name: 'Kyuji',
         age: 10,
         bio: 'I love biting ankles and doggies! owa owa frfrsssssssssssssssssssss',
-        imageUrl: require('./shiba.png'), 
+        imageUrl: require('./images/shiba.png'), 
       };
     return (
       <View style = {styles.container}>
