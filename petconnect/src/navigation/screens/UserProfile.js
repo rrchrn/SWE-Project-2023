@@ -17,7 +17,7 @@ export default function UserProfile({ navigation }) {
     sex: 'Male',
     breed: 'shiba inu',
     nature: 'Timid',
-    from: 'Arlington Texas',
+    from: 'Arlington, Texas',
     email: currentUser ? currentUser.email : "", // Add the user's email to the user object if logged in
     photos: [
       require('./images/shiba2.png'),
