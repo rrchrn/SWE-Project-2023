@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {auth,db} from '../../../firebase.ignore.js'
 
 export default function LikesPage() {
   return (
