@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {auth} from '../../../firebase.ignore.js'
 import { useNavigation } from '@react-navigation/native'
@@ -6,9 +6,11 @@ import { useNavigation } from '@react-navigation/native'
 const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
-
+    
     const navigation = useNavigation()
 
+    
+    
     const handleSignUp = () => {
       auth
         .createUserWithEmailAndPassword(email,password)
@@ -36,10 +38,14 @@ const LoginScreen = () => {
       behavior='padding' >
     <View 
       style = {styles.inputcontainer}>
+      <View>
+        <Image source={require('./images/dogcatlogo.png')} style={styles.image}/> 
+        <Text style={styles.header}>PetConnect</Text>
+      </View>
       <TextInput 
         placeholder='Email' 
         value={email} 
-        onChangeText={text => setEmail(text) } 
+        onChangeText={text => setEmail(text)} 
         style = {styles.input} 
         placeholderTextColor="#000">
 
@@ -82,6 +88,16 @@ const styles = StyleSheet.create({
   inputcontainer: {
     width:'80%',
   },
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    paddingTop: 20,
+  },
+  image: {
+    alignSelf: 'center',
+    width: 200,
+    height: 200,
+  },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
@@ -96,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#BBBEFE',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -112,13 +128,13 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: '#BBBEFE',
     borderWidth: 2,
 
     
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#BBBEFE',
     fontWeight: 700,
     fontSize: 16,
 
