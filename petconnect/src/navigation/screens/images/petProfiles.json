@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Martin",
+        "age": "13 years",
+        "sex": "Male",
+        "image": "cat1.jpg"
+    },
+    {
+        "name": "Buddy",
+        "age": "2 years",
+        "sex": "Male",
+        "image": "dog1.jpg"
+    },
+    {
+        "name": "Emma",
+        "age": "1 years",
+        "sex": "Male",
+        "image": "cat2.jpg"
+    },
+    {
+        "name": "Darren",
+        "age": "9 years",
+        "sex": "Male",
+        "image": "dog2.jpg"
+    },
+    {
+        "name": "Lily",
+        "age": "3 years",
+        "sex": "Female",
+        "image": "dog3.jpg"
+    },
+    {
+        "name": "Jennifer",
+        "age": "5 years",
+        "sex": "Female",
+        "image": "cat3.jpg"
+    },
+    {
+        "name": "Ashley",
+        "age": "4 years",
+        "sex": "Female",
+        "image": "dog4.jpg"
+    },
+    {
+        "name": "James",
+        "age": "8 years",
+        "sex": "Male",
+        "image": "cat4.jpg"
+    }
+]

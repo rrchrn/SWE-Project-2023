@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
     marginRight:270,
     paddingBottom:10,
     paddingTop:10,
-    fontWeight:'bold',
+    //fontWeight:'bold',
     fontSize: 24,
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   bio: {
     fontSize: 16,
