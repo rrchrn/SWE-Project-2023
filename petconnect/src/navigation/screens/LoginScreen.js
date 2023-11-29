@@ -50,6 +50,7 @@ const LoginScreen = () => {
         placeholderTextColor="#000">
 
       </TextInput>
+      
       <TextInput 
         placeholder='Password' 
         value={password} 
@@ -58,6 +59,7 @@ const LoginScreen = () => {
         secureTextEntry 
         placeholderTextColor="#000">
       </TextInput>
+      <View style={styles.line}></View>
     </View>
     <View style = {styles.buttonContainer}>
       <TouchableOpacity
@@ -89,27 +91,30 @@ const styles = StyleSheet.create({
     width:'80%',
   },
   header: {
-    fontSize: 20,
+    fontSize: 32,
     textAlign: 'center',
-    paddingTop: 20,
+    paddingTop: 1,
+    fontWeight: 'bold', // Added fontWeight for a bolder look
+    color: '#BBBEFE', // Added color for a vibrant look
+    
   },
   image: {
     alignSelf: 'center',
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 110,
   },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 10,
   },
   buttonContainer: {
-    width: '50%',
+    width: '80%',
     justifyContent: 'center',
     alignItems:'center',
-    marginTop: 40,
+    marginTop: 1,
   },
   button: {
     backgroundColor: '#BBBEFE',
@@ -121,22 +126,25 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 700,
+   // fontWeight: 700,
     fontSize: 16,
 
   },
   buttonOutline: {
     backgroundColor: 'white',
-    marginTop: 5,
+    marginTop: 10,
     borderColor: '#BBBEFE',
     borderWidth: 2,
-
-    
   },
   buttonOutlineText: {
     color: '#BBBEFE',
-    fontWeight: 700,
+   // fontWeight: 700,
     fontSize: 16,
 
   },
+  line: {
+    borderBottomColor: '#BBBEFE', // Adjust color as needed
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  }
 })
