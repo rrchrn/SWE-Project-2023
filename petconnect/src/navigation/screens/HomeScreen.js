@@ -71,14 +71,14 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.nametext}>{currentPet.name}</Text>
           <Text style={styles.text}>{currentPet.age}</Text>
           <Text style={styles.text}>{currentPet.sex}</Text>
-          <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
-            <Ionicons name="heart-dislike-outline" size={50} color="red"/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.like} onPress={handleLike}>
-            <Ionicons name="heart-outline" size={50} color="green"/>
-          </TouchableOpacity>
-          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.dislike} onPress={handleDislike}>
+          <Ionicons name="heart-dislike-circle-outline" size={75} color="#fd7076"/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.like} onPress={handleLike}>
+          <Ionicons name="heart-circle-outline" size={75} color="#76fd70"/>
         </TouchableOpacity>
       </View>
       <Modal
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     borderRadius: 8,
-    padding: 20,
+    padding: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -138,15 +138,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 0,
     alignItems: 'center', 
-    justifyContent: 'center', 
+    justifyContent: 'center'
   },
   like: {
-    marginHorizontal: 20,
-    paddingTop: 15,
+    marginHorizontal: 10,
+    padding: 5
   },
   dislike: {
-    marginHorizontal: 20,
-    paddingTop: 15,
+    marginHorizontal: 17,
+    padding: 5
   },
   maintext: {
     paddingBottom: 10,
@@ -155,10 +155,12 @@ const styles = StyleSheet.create({
   nametext: {
     paddingTop: 10,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'left',
+    fontWeight: '500'
   },
   text : {
-    textAlign: 'center'
+    textAlign: 'left',
+    fontWeight: '300'
   },
   centeredView: {
     flex: 1,
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#7076fd',
   },
   textStyle: {
     color: 'white',
