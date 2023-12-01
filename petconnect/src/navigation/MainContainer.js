@@ -12,6 +12,7 @@ import ChatPage from './screens/ChatPage.js';
 import EditPage from './screens/EditUserProfile.js';
 import LikesPage from './screens/LikesPage.js';
 import LoginScreen from './screens/LoginScreen.js'; // Import the LoginScreen
+import Registration from './screens/Registration.js';
 import { auth } from '../../firebase.ignore.js';
 
 // Screen names
@@ -21,6 +22,7 @@ const chatName = 'Chat';
 const likesName = 'Likes';
 const editUser = 'Edit';
 const loginpage = 'PetConnect';
+const registration = 'Registration';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator(); // Create a Stack.Navigator
@@ -73,6 +75,7 @@ export default function MainContainer() {
         // Render the LoginScreen using a Stack.Navigator
         <Stack.Navigator>
           <Stack.Screen name={loginpage} component={LoginScreen} options={{ headerShown: false }}  />
+          <Stack.Screen name={registration} component={Registration} /> 
         </Stack.Navigator>
       )}
     </NavigationContainer>

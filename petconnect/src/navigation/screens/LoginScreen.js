@@ -1,85 +1,72 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import {auth} from '../../../firebase.ignore.js'
-import { useNavigation } from '@react-navigation/native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { auth } from '../../../firebase.ignore.js';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Registration from './Registration.js';
+
+const registration = 'Registration';
+
+const Stack = createStackNavigator();
 
 const LoginScreen = () => {
-    const [email, setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    
-    const navigation = useNavigation()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    
-    
-    const handleSignUp = () => {
-      auth
-        .createUserWithEmailAndPassword(email,password)
-        .then(userCredentials => {
-          const user = userCredentials.user;
-          console.log('Registered ' + user.email);
-        })
-        .catch(error => alert(error.message))
-    }
+  const navigation = useNavigation();
 
+  const handleRegister = () => {
+    navigation.navigate(registration);
+  };
 
-    const handleLogin = () => {
-      auth
-      .signInWithEmailAndPassword(email,password)
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
-          const user = userCredentials.user;
-          console.log('Logged in with: ' + user.email);
-        })
-        .catch(error => alert(error.message))
-    }
+        const user = userCredentials.user;
+        console.log('Logged in with: ' + user.email);
+      })
+      .catch(error => alert(error.message));
+  };
 
   return (
-   <KeyboardAvoidingView
-      style={styles.container} 
-      behavior='padding' >
-    <View 
-      style = {styles.inputcontainer}>
-      <View>
-        <Image source={require('./images/dogcatlogo.png')} style={styles.image}/> 
-        <Text style={styles.header}>PetConnect</Text>
+    <KeyboardAvoidingView style={styles.container} behavior='padding'>
+      <View style={styles.inputcontainer}>
+        <View>
+          <Image source={require('./images/dogcatlogo.png')} style={styles.image} />
+          <Text style={styles.header}>PetConnect</Text>
+        </View>
+        <TextInput
+          placeholder='Email'
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.input}
+          placeholderTextColor="#000"
+        />
+        <TextInput
+          placeholder='Password'
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+          placeholderTextColor="#000"
+        />
+        <View style={styles.line}></View>
       </View>
-      <TextInput 
-        placeholder='Email' 
-        value={email} 
-        onChangeText={text => setEmail(text)} 
-        style = {styles.input} 
-        placeholderTextColor="#000">
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRegister} style={[styles.button, styles.buttonOutline]}>
+          <Text style={styles.buttonOutlineText}>Register</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
+  );
+};
 
-      </TextInput>
-      
-      <TextInput 
-        placeholder='Password' 
-        value={password} 
-        onChangeText={text => setPassword(text)} 
-        style = {styles.input} 
-        secureTextEntry 
-        placeholderTextColor="#000">
-      </TextInput>
-      <View style={styles.line}></View>
-    </View>
-    <View style = {styles.buttonContainer}>
-      <TouchableOpacity
-        onPress={handleLogin}
-        style={styles.button}
-      >
-       <Text style={styles.buttonText}>Login</Text> 
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleSignUp}
-        style={[styles.button, styles.buttonOutline]}
-      >
-       <Text style={[styles.buttonOutlineText]}>Register</Text> 
-      </TouchableOpacity>
-    </View>
-   </KeyboardAvoidingView>
-  )
-}
+export default LoginScreen;
 
-export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
