@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import {auth} from '../../../firebase.ignore.js'
+import {auth, db} from '../../../firebase.ignore.js'
 import { useNavigation } from '@react-navigation/native'
 
 
@@ -10,31 +10,36 @@ const Registration = () => {
     const [name, setName] = useState('')
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
-    
-    const navigation = useNavigation()
+  
 
-    
-    
     const handleSignUp = () => {
       auth
-        .createUserWithEmailAndPassword(email,password)
-        .then(userCredentials => {
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
           const user = userCredentials.user;
           console.log('Registered ' + user.email);
+
+          // Create a user document in the "users" collection
+          db.collection('users')
+            .doc(user.uid)
+            .set({
+              name: name,
+              age: age,
+              gender: gender,
+              likes: [], // Initialize likes as an empty array
+              email: email,
+            })
+            .then(() => {
+              console.log('User document added to Firestore');
+            })
+            .catch((error) => {
+              console.error('Error adding user document:', error);
+            });
         })
-        .catch(error => alert(error.message))
-    }
+        .catch((error) => alert(error.message));
+    };
 
 
-    const handleLogin = () => {
-      auth
-      .signInWithEmailAndPassword(email,password)
-      .then(userCredentials => {
-          const user = userCredentials.user;
-          console.log('Logged in with: ' + user.email);
-        })
-        .catch(error => alert(error.message))
-    }
 
   return (
    <KeyboardAvoidingView
@@ -98,7 +103,7 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default Registration;
 
 const styles = StyleSheet.create({
   container: {
