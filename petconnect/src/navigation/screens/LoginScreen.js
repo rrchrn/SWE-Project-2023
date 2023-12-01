@@ -2,12 +2,8 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpaci
 import React, { useState } from 'react';
 import { auth } from '../../../firebase.ignore.js';
 import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Registration from './Registration.js';
 
 const registration = 'Registration';
-
-const Stack = createStackNavigator();
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
