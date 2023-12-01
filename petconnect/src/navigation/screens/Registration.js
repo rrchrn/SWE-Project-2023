@@ -44,7 +44,7 @@ const Registration = () => {
       style = {styles.inputcontainer}>
       <View>
         <Image source={require('./images/dogcatlogo.png')} style={styles.image}/> 
-        <Text style={styles.header}>PetConnect Registration</Text>
+        <Text style={styles.header}>Registration</Text>
       </View>
       <TextInput 
         placeholder='Name' 
