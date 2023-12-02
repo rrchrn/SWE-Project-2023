@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { auth, db } from "../../../firebase.ignore";
 
 export default function UserProfile({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Hardcoded image sources
+  const images = [
+    require('./images/shiba2.png'),
+    require('./images/shiba3.png'),
+    require('./images/shiba4.png'),
+    require('./images/shiba5.png'),
+    require('./images/shiba6.png'),
+    require('./images/shiba7.png')
+  ];
+
+  // Main profile image source
+  const mainImage = require('./images/shiba.png');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,31 +66,50 @@ export default function UserProfile({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      {/* Display user data */}
-      <Text style={styles.name}>{userData.name}, {userData.age}</Text>
-      <Text style={styles.email}>{userData.email}</Text>
-      <Text style={styles.gender}>Gender: {userData.gender}</Text>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        {/* Main profile image */}
+        <Image source={mainImage} style={styles.mainImage} />
 
-      {/* Add buttons or links to edit the profile or perform other actions */}
-      <View style={styles.BtnWrapper}>
-        <TouchableOpacity style={styles.Btn} onPress={() => navigation.navigate('Edit')}>
-          <Text style={styles.userBtnTxt}>Edit Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Btn} onPress={handleSignOut}>
-          <Text style={styles.userBtnTxt}>Sign Out</Text>
-        </TouchableOpacity>
+        {/* Existing user data display */}
+        <Text style={styles.name}>{userData.name}, {userData.age.toString()}</Text>
+        <Text style={styles.email}>{userData.email}</Text>
+        <Text style={styles.gender}>Gender: {userData.gender}</Text>
+
+        {/* Buttons */}
+        <View style={styles.btnWrapper}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Edit')}>
+            <Text style={styles.btnText}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
+            <Text style={styles.btnText}>View Likes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleSignOut}>
+            <Text style={styles.btnText}>Sign Out</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Section title for photos */}
+        <Text style={styles.photoSectionTitle}>Photos</Text>
+
+        {/* Images display */}
+        <View style={styles.photoGrid}>
+          {images.map((image, index) => (
+            <Image key={index} source={image} style={styles.photoItem} />
+          ))}
+        </View>
+
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollView: {
     backgroundColor: '#fff',
+  },
+  container: {
     alignItems: 'center',
-    justifyContent: 'center',
     padding: 20,
   },
   name: {
@@ -91,21 +125,43 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  Btn: {
+  btn: {
     borderColor: '#B200ED',
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
-    marginBottom: 10, // Added for spacing between buttons
+    marginBottom: 10,
   },
-  userBtnTxt: {
+  btnText: {
     color: '#B200ED',
   },
-  BtnWrapper: {
+  btnWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
+  },
+  mainImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 10,
+  },
+  photoItem: {
+    width: 110,
+    height: 110,
+    margin: 5,
+  },
+  photoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  photoSectionTitle: {
+    alignSelf: 'center',
+    fontSize: 24,
+    marginBottom: 10,
   },
 });
