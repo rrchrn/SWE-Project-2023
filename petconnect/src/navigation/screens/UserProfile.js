@@ -1,128 +1,104 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity,TextInput,FlatList } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {auth} from "../../../firebase.ignore"
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { auth, db } from "../../../firebase.ignore";
 
 export default function UserProfile({ navigation }) {
-  // Sample user data, replace this with your actual user data
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const currentUser = auth.currentUser;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth.currentUser) {
+        try {
+          const docRef = db.collection('users').doc(auth.currentUser.uid);
+          const doc = await docRef.get();
 
-  const user = {
-    name: "Dog",
-    age: 5,
-    bio: 'Hi my name is Kyuji the Shiba. I love biting ankles and doggies. Please have a fun playdate with me and my human ',
-    imageUrl: require('./images/shiba.png'),
-    sex: 'Male',
-    breed: 'shiba inu',
-    nature: 'Timid',
-    from: 'Arlington, Texas',
-    email: currentUser ? currentUser.email : "", // Add the user's email to the user object if logged in
-    photos: [
-      require('./images/shiba2.png'),
-      require('./images/shiba3.png'),
-      require('./images/shiba4.png'),
-      require('./images/shiba5.png'),
-      require('./images/shiba6.png'),
-      require('./images/shiba7.png')
-    ],
-  };
+          if (doc.exists) {
+            setUserData(doc.data());
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(userCredentials => {
-        console.log('Signed out ' + user.email);
+    auth.signOut()
+      .then(() => {
+        console.log('Signed out');
+        navigation.navigate('Login'); // Replace 'Login' with your actual login screen route name
       })
-      .catch(error => alert(error.message))
+      .catch(error => alert(error.message));
+  };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (!userData) {
+    return (
+      <View style={styles.container}>
+        <Text>No user data available</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
-      <Image source={user.imageUrl} style={styles.profileImage} />
-      <Text style={styles.name}>{user.name}, {user.age}</Text>
-      <Text style={styles.action}>{user.sex} | {user.breed} | {user.nature}</Text>
-      <View style={styles.fromContainer}>
-        <FontAwesome name="location-arrow" size={20} style={styles.fromIcon} />
-        <Text style={styles.fromText}>{user.from}</Text>
-      </View>
-      {currentUser ? <Text style={styles.email}>{user.email}</Text> : null}
-      <Text style={styles.bio}>{user.bio}</Text>
+      {/* Display user data */}
+      <Text style={styles.name}>{userData.name}, {userData.age}</Text>
+      <Text style={styles.email}>{userData.email}</Text>
+      <Text style={styles.gender}>Gender: {userData.gender}</Text>
 
       {/* Add buttons or links to edit the profile or perform other actions */}
       <View style={styles.BtnWrapper}>
-        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Edit') }}>
+        <TouchableOpacity style={styles.Btn} onPress={() => navigation.navigate('Edit')}>
           <Text style={styles.userBtnTxt}>Edit Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Likes'); }}>
-          <Text style={styles.userBtnTxt}>View Likes</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Btn} onPress={handleSignOut}>
           <Text style={styles.userBtnTxt}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.PhotoTitle}>Photos</Text>
-
-      <View style={styles.photoGrid}>
-        {user.photos.map((photo, index) => (
-          <Image key={index} source={photo} style={styles.photoItem} />
-        ))}
-      </View>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    //justifyContent: 'center',
+    justifyContent: 'center',
     padding: 20,
-  },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 10,
-  },
-  photoItem: {
-    width: 110,
-    height: 110,
-    margin: 5,
-  },
-  photoGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  PhotoTitle:{
-    marginRight:270,
-    paddingBottom:10,
-    paddingTop:10,
-    //fontWeight:'bold',
-    fontSize: 24,
   },
   name: {
     fontSize: 24,
-    //fontWeight: 'bold',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  bio: {
+  email: {
     fontSize: 16,
-    marginTop: 10,
-    marginBottom:30,
+    marginBottom: 10,
+  },
+  gender: {
+    fontSize: 16,
+    marginBottom: 10,
   },
   Btn: {
-    //borderColor: '#2e64e5',
     borderColor: '#B200ED',
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
+    marginBottom: 10, // Added for spacing between buttons
   },
   userBtnTxt: {
     color: '#B200ED',
@@ -131,20 +107,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
-    marginBottom: 10,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 10,
-    //marginBottom: 10,
-   // marginRight:200,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
-    alignContent:'center',
-  },
-  fromContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
