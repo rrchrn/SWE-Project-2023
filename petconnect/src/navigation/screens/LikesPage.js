@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { auth, db } from '../../../firebase.ignore.js';
 
-const LikedProfilesArray = [1, 2, 4, 5];
+export default function LikesPage({navigation}) {
+  const [likedProfiles, setLikedProfiles] = useState([]);
 
-export default function LikesPage() {
-  const [likedProfiles, setLikedProfiles] = useState(LikedProfilesArray);
+  useEffect(() => {
+    // Get the current user
+    const user = auth.currentUser;
+
+    if (user) {
+      // Fetch liked profiles from Firestore
+      db.collection('users')
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const likesArray = doc.data().likes || [];
+            setLikedProfiles(likesArray);
+          } else {
+            console.log('No such document!');
+          }
+        })
+        .catch((error) => {
+          console.error('Error getting document:', error);
+        });
+    }
+  }, []); // Empty dependency array to run the effect only once on component mount
 
   const handleSchedulePlaydate = (profileId) => {
     // Implement your playdate scheduling logic here
     console.log(`Scheduling playdate for profile ${profileId}`);
+    navigation.navigate('Chat');
   };
 
   return (

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import petProfiles from './images/petProfiles.json';
+import {auth, db} from '../../../firebase.ignore.js'
+import firebase from 'firebase/compat/app';
 
 export default function HomeScreen({ navigation }) {
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-
+  
   const currentPet = petProfiles[currentPetIndex];
 
   const petImages = {
@@ -31,9 +33,31 @@ export default function HomeScreen({ navigation }) {
   };
 
   const handleLike = () => {
-    // Add the liked pet to the 'likedPets' state
-    showNextPet();
+    // Add the liked pet index to the 'likes' array
+    const likedPetIndex = currentPetIndex;
+  
+    // Get the current user
+    const user = auth.currentUser;
+  
+    if (user) {
+      // Update Firestore document to add the liked pet index
+      db.collection('users')
+        .doc(user.uid)
+        .update({
+          likes: firebase.firestore.FieldValue.arrayUnion(likedPetIndex),
+        })
+        .then(() => {
+          console.log('Liked pet index added to Firestore');
+          showNextPet(); // Show the next pet after it has been liked
+        })
+        .catch((error) => {
+          console.error('Error adding liked pet index to Firestore: ', error);
+        });
+    } else {
+      console.error('No user is currently signed in.');
+    }
   };
+  
 
   const handleDislike = () => {
     showNextPet();
