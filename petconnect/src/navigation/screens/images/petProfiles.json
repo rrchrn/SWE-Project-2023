@@ -1,50 +1,66 @@
 [
     {
-        "name": "Martin",
-        "age": "13 years",
-        "sex": "Male",
-        "image": "cat1.jpg"
-    },
-    {
-        "name": "Buddy",
-        "age": "2 years",
-        "sex": "Male",
-        "image": "dog1.jpg"
-    },
-    {
         "name": "Emma",
         "age": "1 years",
-        "sex": "Male",
-        "image": "cat2.jpg"
+        "sex": "Female",
+        "image": "cat2.jpg",
+        "bio": "hi! im emma! im a curious lil kitten who loves to explore!! :)",
+        "traits": ["Curious", "Adventurous", "Explorer"]
     },
     {
         "name": "Darren",
         "age": "9 years",
         "sex": "Male",
-        "image": "dog2.jpg"
+        "image": "dog2.jpg",
+        "bio": "HIYA. im SUUUUUUUPER playful and energetic! Lets go for long walks on the beach and play some fetch!!!",
+        "traits": ["Lovable", "Friendly", "Hyper"]
+    },
+    {
+        "name": "Martin",
+        "age": "13 years",
+        "sex": "Male",
+        "image": "cat1.jpg",
+        "bio": "i like sunbathing and bird-watching :)",
+        "traits": ["Sleepy", "Lazy", "Chill"]
+    },
+    {
+        "name": "Buddy",
+        "age": "2 years",
+        "sex": "Male",
+        "image": "dog1.jpg",
+        "bio": "hi im buddy! if u hate taking baths like me we'll get along :D",
+        "traits": ["Playful", "Energetic", "Loves walks"]
     },
     {
         "name": "Lily",
         "age": "3 years",
         "sex": "Female",
-        "image": "dog3.jpg"
+        "image": "dog3.jpg",
+        "bio": "GIMME ALL YOUR FOOOD AHHHHHHHHHMMMM",
+        "traits": ["Hungry", "Chill", "Friendly"]
     },
     {
         "name": "Jennifer",
         "age": "5 years",
         "sex": "Female",
-        "image": "cat3.jpg"
+        "image": "cat3.jpg",
+        "bio": "I'm just here to find a chill pal.",
+        "traits": ["Sleepy", "Chill", "Lovable"]
     },
     {
         "name": "Ashley",
         "age": "4 years",
         "sex": "Female",
-        "image": "dog4.jpg"
+        "image": "dog4.jpg",
+        "bio": "im super duper cool",
+        "traits": ["Cool", "Stylish", "Chill"]
     },
     {
         "name": "James",
         "age": "8 years",
         "sex": "Male",
-        "image": "cat4.jpg"
+        "image": "cat4.jpg",
+        "bio": "Hello there. I like to make friends with all kinds of pets.",
+        "traits": ["Kind", "Respectful", "Lovable"]
     }
 ]
