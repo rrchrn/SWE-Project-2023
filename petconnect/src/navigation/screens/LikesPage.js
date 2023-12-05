@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image } from 'react-native';
+
 import { auth, db } from '../../../firebase.ignore.js';
 import petProfiles from './images/petProfiles.json';
 
