@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import petProfiles from './images/petProfiles.json';
 import {auth, db} from '../../../firebase.ignore.js'
 import firebase from 'firebase/compat/app';
+
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
+const window = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
@@ -102,11 +105,17 @@ export default function HomeScreen({ navigation }) {
             </View>
             {/* Text Container now comes after the Image Container */}
             <View style={styles.textContainer}>
-              <Text style={styles.modalText}>Name: {currentPet.name}</Text>
-              <Text style={styles.modalText}>Age: {currentPet.age}</Text>
-              <Text style={styles.modalText}>Sex: {currentPet.sex}</Text>
-              <Text style={styles.modalText}>Bio: {currentPet.bio}</Text>
-              <Text style={styles.modalText}>Traits: {currentPet.traits.join(', ')}</Text>
+              <Text style={styles.modalNameText}>{currentPet.name}</Text>
+              <Text style={styles.modalText}>{currentPet.age}</Text>
+              <Text style={styles.modalText}>{currentPet.sex}</Text>
+              <Text style={styles.modalBioText}>{currentPet.bio}</Text>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                {currentPet.traits.map((trait, index) => (
+                  <View key={index} style={[styles.trait, { backgroundColor: traitColors[index % traitColors.length] }]}>
+                    <Text>{trait}</Text>
+                  </View>
+                ))}
+              </View>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
                 onPress={closeModal}
@@ -197,13 +206,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: '75%', // Adjust width
-    height: '75%', // Adjust height
+    ...Platform.select({
+      ios: {
+        width: '80%', // or any other specific dimension for iOS
+        height: '60%',
+      },
+      android: {
+        width: '80%',
+        height: '60%',
+      },
+      web: {
+        width: '50%', // you might need a different dimension for web
+        height: '80%',
+      },
+    }),
+    flexDirection: 'column', // Stack children vertically
+    justifyContent: 'space-between', // Distribute space between children
   },
   imageContainer: {
     width: '100%', // Take full width of the modal
     alignItems: 'center', // Center images horizontally
     marginBottom: 20, // Space between image and text
+    flex: 1
   },
   modalPetImage: {
     width: 150, // Adjust as needed
@@ -216,19 +240,19 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1, // Take the other half of the space
-    alignItems: 'flex-start', // Align text to the start
+    alignItems: 'center', // Align text to the start
     justifyContent: 'center', // Center text vertically
-    marginLeft: 20, // Add some space between images and text
   },
   modalPetImage: {
-    width: 100, // Adjust as needed
-    height: 100, // Adjust as needed
-    marginBottom: 10, // Space between images
+    width: 150, // Adjust as needed
+    height: 150, // Adjust as needed
+    marginBottom: 50, // Space between images
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginTop: 20
   },
   buttonClose: {
     backgroundColor: '#7076fd',
@@ -239,7 +263,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
+    fontWeight: '300'
+  },
+  modalNameText: {
+    // This will specifically apply to the pet's name
+    fontSize: 20,
+    fontWeight: '500', // Bold like 'nametext' style
+    textAlign:'center'
+  },
+  modalBioText: {
+    fontWeight: '300', // Lighter like 'text' style
+    marginTop: 15, // Larger space before the bio
+    marginBottom: 15, // Larger space after the bio
+    textAlign: 'center',
+    fontSize: 20
+  },
+  trait: {
+    backgroundColor: 'transparent', // this will be dynamically changed
+    borderRadius: 20, // circular edges
+    paddingHorizontal: 10, // horizontal padding
+    paddingVertical: 5, // vertical padding
+    margin: 4, // space between each trait
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
