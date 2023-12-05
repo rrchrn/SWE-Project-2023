@@ -78,9 +78,6 @@ export default function UserProfile({ navigation }) {
 
         {/* Buttons */}
         <View style={styles.btnWrapper}>
-          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Edit')}>
-            <Text style={styles.btnText}>Edit Profile</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
             <Text style={styles.btnText}>View Likes</Text>
           </TouchableOpacity>

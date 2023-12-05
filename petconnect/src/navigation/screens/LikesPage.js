@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import { auth, db } from '../../../firebase.ignore.js';
 import petProfiles from './images/petProfiles.json';
 
@@ -56,7 +55,7 @@ export default function LikesPage() {
 
   return (
     <View style={styles.container}>
-      <Text>This is the Likes Page</Text>
+      
       <ScrollView style={styles.scrollView}>
         {likedProfiles.map((profileId) => (
           <TouchableOpacity
