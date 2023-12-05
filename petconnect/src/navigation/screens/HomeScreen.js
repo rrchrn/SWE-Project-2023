@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import petProfiles from './images/petProfiles.json';
 import {auth, db} from '../../../firebase.ignore.js'
 import firebase from 'firebase/compat/app';
 
 const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
+const window = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
@@ -205,13 +206,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: '50%', // Adjust width
-    height: '80%', // Adjust height
+    ...Platform.select({
+      ios: {
+        width: '80%', // or any other specific dimension for iOS
+        height: '60%',
+      },
+      android: {
+        width: '80%',
+        height: '60%',
+      },
+      web: {
+        width: '50%', // you might need a different dimension for web
+        height: '80%',
+      },
+    }),
+    flexDirection: 'column', // Stack children vertically
+    justifyContent: 'space-between', // Distribute space between children
   },
   imageContainer: {
     width: '100%', // Take full width of the modal
     alignItems: 'center', // Center images horizontally
     marginBottom: 20, // Space between image and text
+    flex: 1
   },
   modalPetImage: {
     width: 150, // Adjust as needed
