@@ -1,16 +1,17 @@
+// import all necessary tools/components
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { auth, db } from "../../../firebase.ignore";
 
-const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
-
+// trait colors for pet profiles
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; 
 export default function UserProfile({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Hardcoded image sources
+  // user profile pet images
   const images = [
     require('./images/shiba2.png'),
     require('./images/shiba3.png'),
@@ -20,9 +21,10 @@ export default function UserProfile({ navigation }) {
     require('./images/shiba7.png')
   ];
 
-  // Main profile image source
+  // main image for pet profile
   const mainImage = require('./images/shiba.png');
 
+  // dispaly the pet profile
   useEffect(() => {
     const fetchUserData = async () => {
       if (auth.currentUser) {
@@ -46,11 +48,12 @@ export default function UserProfile({ navigation }) {
     fetchUserData();
   }, []);
 
+  // sign out of the app
   const handleSignOut = () => {
     auth.signOut()
       .then(() => {
         console.log('Signed out');
-        navigation.navigate('Login'); // Replace 'Login' with your actual login screen route name
+        navigation.navigate('Login'); 
       })
       .catch(error => alert(error.message));
   };
@@ -59,21 +62,21 @@ export default function UserProfile({ navigation }) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
+  // no user profile data
   if (!userData) {
     return (
       <View style={styles.container}>
-        <Text>No user data available</Text>
+        <Text>no user data available</Text>
       </View>
     );
   }
 
+  // create the user profile front end
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        {/* Main profile image */}
         <Image source={mainImage} style={styles.mainImage} />
 
-        {/* Existing user data display */}
         <Text style={styles.name}>{userData.name}</Text>
         <Text style={styles.genderAge}>{userData.age.toString()} years</Text>
         <Text style={styles.genderAge}>{userData.gender}</Text>
@@ -90,17 +93,15 @@ export default function UserProfile({ navigation }) {
           <Text>Excited</Text>
         </View>
       </View>
-        {/* Section title for photos */}
         <Text style={styles.photoSectionTitle}>Photos</Text>
 
-        {/* Images display */}
+
         <View style={styles.photoGrid}>
           {images.map((image, index) => (
             <Image key={index} source={image} style={styles.photoItem} />
           ))}
         </View>
         
-        {/* Buttons */}
         <View style={styles.btnWrapper}>
           <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
             <Text style={styles.btnText}>View Likes</Text>
@@ -115,6 +116,7 @@ export default function UserProfile({ navigation }) {
   );
 }
 
+// styling
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#fff',
@@ -186,11 +188,11 @@ const styles = StyleSheet.create({
     fontWeight: 300
   },
   trait: {
-    backgroundColor: 'transparent', // this will be dynamically changed
-    borderRadius: 20, // circular edges
-    paddingHorizontal: 10, // horizontal padding
-    paddingVertical: 5, // vertical padding
-    margin: 4, // space between each trait
+    backgroundColor: 'transparent', 
+    borderRadius: 20, 
+    paddingHorizontal: 10, 
+    paddingVertical: 5, 
+    margin: 4,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15
