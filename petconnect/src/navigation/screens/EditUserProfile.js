@@ -67,7 +67,7 @@ export default function EditUserPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: 20,

@@ -124,16 +124,19 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#f5f5f5'
   },
   name: {
     fontSize: 24,
     fontWeight: '400',
     marginBottom: 5,
+    color: '#7076fd',
+    fontWeight: 'bold'
   },
   email: {
     fontSize: 16,
     marginBottom: 10,
-    fontWeight:'300'
+    fontWeight:'300',
   },
   genderAge: {
     fontSize: 16,
@@ -141,9 +144,12 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   bio: {
-    marginBottom: 10,
     fontWeight: '300',
-    fontSize: 20,
+    marginTop: 15,
+    marginBottom: 15,
+    textAlign: 'left',
+    fontSize: 16,
+    lineHeight: 22,
   },
   btn: {
     borderColor: '#7076fd',

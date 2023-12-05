@@ -18,7 +18,7 @@ import { auth } from '../../firebase.ignore.js';
 
 // screens
 const homeName = 'Home';
-const userPageName = 'User';
+const userPageName = 'User Profile';
 const chatName = 'Chat';
 const likesName = 'Likes';
 const editUser = 'Edit';
