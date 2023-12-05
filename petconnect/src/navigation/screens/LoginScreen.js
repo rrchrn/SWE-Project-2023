@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpaci
 import React, { useState } from 'react';
 import { auth } from '../../../firebase.ignore.js';
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const registration = 'Registration';
+
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +20,8 @@ const LoginScreen = () => {
     navigation.navigate(registration);
   };
 
+  
+  
   // login functionality  
   const handleLogin = () => {
     auth
@@ -34,7 +39,11 @@ const LoginScreen = () => {
       <View style={styles.inputcontainer}>
         <View>
           <Image source={require('./images/dogcatlogo.png')} style={styles.image} />
-          <Text style={styles.header}>PetConnect</Text>
+          <View style={styles.headerlogo}>
+          <Text style={styles.maintext}>PetConnect  </Text>
+          <FontAwesome name="paw" size={29} color="#bbbefe" style={styles.icon}/>
+        
+      </View>
         </View>
         <TextInput
           placeholder='Email'
@@ -69,6 +78,14 @@ export default LoginScreen;
 
 // styling
 const styles = StyleSheet.create({
+   maintext: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#bbbefe',
+    textTransform: 'lowercase',
+    letterSpacing: 1,
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -77,13 +94,18 @@ const styles = StyleSheet.create({
   inputcontainer: {
     width:'80%',
   },
+  headerlogo: {
+    flexDirection: 'row', // This ensures elements inside it are arranged horizontally
+    alignItems: 'center', // This centers elements vertically
+    justifyContent: 'center', // This centers elements horizontally
+  },
   header: {
-    fontSize: 32,
-    textAlign: 'center',
-    paddingTop: 1,
-    fontWeight: 'bold', 
-    color: '#BBBEFE',
-    
+     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',  
+  },
+  icon: {
+    marginRight: 10, // Adjust the margin to control the space between the text and the icon
   },
   image: {
     alignSelf: 'center',
