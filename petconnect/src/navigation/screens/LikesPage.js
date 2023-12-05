@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image } from 'react-native';
 import { auth, db } from '../../../firebase.ignore.js';
 import petProfiles from './images/petProfiles.json';
 
-export default function LikesPage({navigation}) {
+// Image imports
+const petImages = {
+  'dog1.jpg': require('./images/dog1.jpg'),
+  'dog2.jpg': require('./images/dog2.jpg'),
+  'dog3.jpg': require('./images/dog3.jpg'),
+  'dog4.jpg': require('./images/dog4.jpg'),
+  'cat1.jpg': require('./images/cat1.jpg'),
+  'cat2.jpg': require('./images/cat2.jpg'),
+  'cat3.jpg': require('./images/cat3.jpg'),
+  'cat4.jpg': require('./images/cat4.jpg'),
+};
+
+
+export default function LikesPage({ navigation }) {
   const [likedProfiles, setLikedProfiles] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    // Get the current user
     const user = auth.currentUser;
-
     if (user) {
-      // Fetch liked profiles from Firestore
       db.collection('users')
         .doc(user.uid)
         .get()
@@ -30,35 +39,27 @@ export default function LikesPage({navigation}) {
           console.error('Error getting document:', error);
         });
     }
-  }, []); // Empty dependency array to run the effect only once on component mount
+  }, []);
 
-  const handleSchedulePlaydate = (index) => {
-    // Access the profile using the index
-    const profile = petProfiles[index];
-    if (profile) {
-      setSelectedProfile(profile);
-      setModalVisible(true);
-    } else {
-      console.log(`Profile not found for index: ${index}`);
-    }
+  const handleProfilePress = (profileId) => {
+    const petInfo = petProfiles[profileId];
+    setSelectedProfile({ ...petInfo, image: petImages[petInfo.image] });
+    setModalVisible(true);
   };
 
   return (
     <View style={styles.container}>
       <Text>This is the Likes Page</Text>
       <ScrollView style={styles.scrollView}>
-        {likedProfiles.map((profileName, index) => (
+        {likedProfiles.map((profileId) => (
           <TouchableOpacity
-            key={profileName}
+            key={profileId}
             style={styles.profileContainer}
-            onPress={() => console.log(`Navigate to profile ${profileName}`)}
+            onPress={() => handleProfilePress(profileId)}
           >
-            {/* Profile Display */}
-            <Ionicons name="person" size={50} color="blue" />
-            <Text>{`Profile ${profileName}`}</Text>
-            <TouchableOpacity onPress={() => handleSchedulePlaydate(index)}>
-              <Text>Schedule Playdate</Text>
-            </TouchableOpacity>
+            <Image source={petImages[petProfiles[profileId].image]} style={styles.petImage} />
+            <Text>{petProfiles[profileId].name}</Text>
+            {/* Here you can add more profile details if you want them displayed in the list */}
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -67,26 +68,35 @@ export default function LikesPage({navigation}) {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
+        onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalView}>
-          <Text>Availability</Text>
-          {selectedProfile && Object.entries(selectedProfile.availability).map(([day, times]) => (
-            <Text key={day}>{day}: {times.join(', ')}</Text>
-          ))}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text>Close</Text>
-          </TouchableOpacity>
+          {selectedProfile && (
+            <>
+              <Image source={selectedProfile.image} style={styles.modalPetImage} />
+              <Text style={styles.modalText}>Name: {selectedProfile.name}</Text>
+              <Text style={styles.modalText}>Age: {selectedProfile.age}</Text>
+              <Text style={styles.modalText}>Sex: {selectedProfile.sex}</Text>
+              <Text style={styles.modalText}>Bio: {selectedProfile.bio}</Text>
+              <Text style={styles.modalText}>Traits: {selectedProfile.traits.join(', ')}</Text>
+              <Text style={styles.modalText}>Availability:</Text>
+              {Object.entries(selectedProfile.availability || {}).map(([day, times]) => (
+                <Text key={day} style={styles.modalText}>{day}: {times.join(', ')}</Text>
+              ))}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text>Close</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </Modal>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -102,10 +112,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  petImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
   modalView: {
-    alignSelf: 'center', // Center the modal
-    width: '50%', // Set width to 80% of the screen width
-    marginTop: 'auto', // These auto margins help in centering vertically
+    alignSelf: 'center',
+    width: '80%',
+    marginTop: 'auto',
     marginBottom: 'auto',
     backgroundColor: "white",
     borderRadius: 20,
@@ -120,10 +135,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
+  modalPetImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+  },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
     backgroundColor: "#2196F3"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
