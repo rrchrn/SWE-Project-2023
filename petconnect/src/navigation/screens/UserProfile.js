@@ -1,89 +1,148 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TouchableOpacity,TextInput,FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {auth} from "../../../firebase.ignore"
+import { auth, db } from "../../../firebase.ignore";
 
 export default function UserProfile({ navigation }) {
-  // Sample user data, replace this with your actual user data
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const currentUser = auth.currentUser;
+  // Hardcoded image sources
+  const images = [
+    require('./images/shiba2.png'),
+    require('./images/shiba3.png'),
+    require('./images/shiba4.png'),
+    require('./images/shiba5.png'),
+    require('./images/shiba6.png'),
+    require('./images/shiba7.png')
+  ];
 
-  const user = {
-    name: "Dog",
-    age: 5,
-    bio: 'Hi my name is Kyuji the Shiba. I love biting ankles and doggies. Please have a fun playdate with me and my human ',
-    imageUrl: require('./images/shiba.png'),
-    sex: 'Male',
-    breed: 'shiba inu',
-    nature: 'Timid',
-    from: 'Arlington, Texas',
-    email: currentUser ? currentUser.email : "", // Add the user's email to the user object if logged in
-    photos: [
-      require('./images/shiba2.png'),
-      require('./images/shiba3.png'),
-      require('./images/shiba4.png'),
-      require('./images/shiba5.png'),
-      require('./images/shiba6.png'),
-      require('./images/shiba7.png')
-    ],
-  };
+  // Main profile image source
+  const mainImage = require('./images/shiba.png');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth.currentUser) {
+        try {
+          const docRef = db.collection('users').doc(auth.currentUser.uid);
+          const doc = await docRef.get();
+
+          if (doc.exists) {
+            setUserData(doc.data());
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(userCredentials => {
-        console.log('Signed out ' + user.email);
+    auth.signOut()
+      .then(() => {
+        console.log('Signed out');
+        navigation.navigate('Login'); // Replace 'Login' with your actual login screen route name
       })
-      .catch(error => alert(error.message))
+      .catch(error => alert(error.message));
+  };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (!userData) {
+    return (
+      <View style={styles.container}>
+        <Text>No user data available</Text>
+      </View>
+    );
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={user.imageUrl} style={styles.profileImage} />
-      <Text style={styles.name}>{user.name}, {user.age}</Text>
-      <Text style={styles.action}>{user.sex} | {user.breed} | {user.nature}</Text>
-      <View style={styles.fromContainer}>
-        <FontAwesome name="location-arrow" size={20} style={styles.fromIcon} />
-        <Text style={styles.fromText}>{user.from}</Text>
-      </View>
-      {currentUser ? <Text style={styles.email}>{user.email}</Text> : null}
-      <Text style={styles.bio}>{user.bio}</Text>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        {/* Main profile image */}
+        <Image source={mainImage} style={styles.mainImage} />
 
-      {/* Add buttons or links to edit the profile or perform other actions */}
-      <View style={styles.BtnWrapper}>
-        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Edit') }}>
-          <Text style={styles.userBtnTxt}>Edit Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Btn} onPress={() => { navigation.navigate('Likes'); }}>
-          <Text style={styles.userBtnTxt}>View Likes</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Btn} onPress={handleSignOut}>
-          <Text style={styles.userBtnTxt}>Sign Out</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Existing user data display */}
+        <Text style={styles.name}>{userData.name}, {userData.age.toString()}</Text>
+        <Text style={styles.email}>{userData.email}</Text>
+        <Text style={styles.gender}>Gender: {userData.gender}</Text>
 
-      <Text style={styles.PhotoTitle}>Photos</Text>
+        {/* Buttons */}
+        <View style={styles.btnWrapper}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Edit')}>
+            <Text style={styles.btnText}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
+            <Text style={styles.btnText}>View Likes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleSignOut}>
+            <Text style={styles.btnText}>Sign Out</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.photoGrid}>
-        {user.photos.map((photo, index) => (
-          <Image key={index} source={photo} style={styles.photoItem} />
-        ))}
+        {/* Section title for photos */}
+        <Text style={styles.photoSectionTitle}>Photos</Text>
+
+        {/* Images display */}
+        <View style={styles.photoGrid}>
+          {images.map((image, index) => (
+            <Image key={index} source={image} style={styles.photoItem} />
+          ))}
+        </View>
+
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollView: {
     backgroundColor: '#fff',
+  },
+  container: {
     alignItems: 'center',
-    //justifyContent: 'center',
     padding: 20,
   },
-  profileImage: {
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  email: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  gender: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  btn: {
+    borderColor: '#B200ED',
+    borderWidth: 2,
+    borderRadius: 3,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
+    marginBottom: 10,
+  },
+  btnText: {
+    color: '#B200ED',
+  },
+  btnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  mainImage: {
     width: 150,
     height: 150,
     borderRadius: 75,
@@ -98,53 +157,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  PhotoTitle:{
-    marginRight:270,
-    paddingBottom:10,
-    paddingTop:10,
-    //fontWeight:'bold',
-    fontSize: 24,
-  },
-  name: {
-    fontSize: 24,
-    //fontWeight: 'bold',
-  },
-  bio: {
-    fontSize: 16,
     marginTop: 10,
-    marginBottom:30,
   },
-  Btn: {
-    //borderColor: '#2e64e5',
-    borderColor: '#B200ED',
-    borderWidth: 2,
-    borderRadius: 3,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginHorizontal: 5,
-  },
-  userBtnTxt: {
-    color: '#B200ED',
-  },
-  BtnWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
+  photoSectionTitle: {
+    alignSelf: 'center',
+    fontSize: 24,
     marginBottom: 10,
-  },
-  action: {
-    flexDirection: 'row',
-    marginTop: 10,
-    //marginBottom: 10,
-   // marginRight:200,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
-    alignContent:'center',
-  },
-  fromContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });

@@ -57,8 +57,8 @@ export default function MainContainer() {
                 iconName = focused ? 'home' : 'home-outline';
               } else if (rn === userPageName) {
                 iconName = focused ? 'person' : 'person-outline';
-              } else if (rn === chatName) {
-                iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+              } else if (rn === likesName) {
+                iconName = focused ? 'heart' : 'heart-outline';
               }
               return <Ionicons name={iconName} size={size} color={color} />;
             },
@@ -66,9 +66,8 @@ export default function MainContainer() {
             //tabBarStyle: {backgroundColor: '#edeeff'}
           })}>
           <Tab.Screen name={homeName} component={HomeScreen} />
-          <Tab.Screen name={chatName} component={ChatPage} />
+          <Tab.Screen name={likesName} component={LikesPage} />
           <Tab.Screen name={userPageName} component={UserProfile} />
-          <Tab.Screen name={likesName} component={LikesPage} options={{ tabBarButton: () => null }} />
           <Tab.Screen name={editUser} component={EditPage} options={{ tabBarButton: () => null }} />
         </Tab.Navigator>
       ) : (
