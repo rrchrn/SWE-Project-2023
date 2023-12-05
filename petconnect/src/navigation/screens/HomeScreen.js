@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import petProfiles from './images/petProfiles.json';
 import {auth, db} from '../../../firebase.ignore.js'
 import firebase from 'firebase/compat/app';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // trait colors for pet profiles
 const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; 
@@ -76,10 +77,18 @@ export default function HomeScreen({ navigation }) {
     setModalVisible(false);
   };
 
+  const Header = () => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.maintext}>PetConnect  </Text>
+      <FontAwesome name="paw" size={29} color="#bbbefe" style={styles.icon} />
+    </View>
+  );
+};
   // create the hoem page front end
   return (
     <View style={styles.container}>
-      <Text style={styles.maintext}>PetConnect</Text>
+      <Header />
       <View style={styles.card}>
         <TouchableOpacity onPress={openModal}>
           <Image source={petImages[currentPet.image]} style={styles.petImage} />
@@ -135,6 +144,15 @@ export default function HomeScreen({ navigation }) {
 
 // styling
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
   card: {
     backgroundColor: 'white',
     borderRadius: 8,
@@ -150,7 +168,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -177,14 +195,19 @@ const styles = StyleSheet.create({
     padding: 5
   },
   maintext: {
-    paddingBottom: 10,
-    fontSize: 30
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#bbbefe',
+    textTransform: 'lowercase',
+    letterSpacing: 1,
+    textAlign: 'center',
   },
   nametext: {
     paddingTop: 10,
     fontSize: 20,
     textAlign: 'left',
-    fontWeight: '400'
+    fontWeight: '400',
+    color: '#7076fd'
   },
   text: {
     textAlign: 'left',

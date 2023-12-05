@@ -153,7 +153,7 @@ export default function LikesPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -265,9 +265,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   modalNameText: {
+    paddingTop: 6,
     fontSize: 20,
     fontWeight: '400', 
-    textAlign:'center'
+    textAlign:'center',
+    color: '#6e6fae'
   },
   modalBioText: {
     fontWeight: '300', 

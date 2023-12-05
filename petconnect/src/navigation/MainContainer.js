@@ -18,11 +18,11 @@ import { auth } from '../../firebase.ignore.js';
 
 // screens
 const homeName = 'Home';
-const userPageName = 'User';
+const userPageName = 'User Profile';
 const chatName = 'Chat';
 const likesName = 'Likes';
 const editUser = 'Edit';
-const loginpage = 'PetConnect';
+const loginPage = 'PetConnect';
 const registration = 'Registration';
 
 const Tab = createBottomTabNavigator();
@@ -73,7 +73,7 @@ export default function MainContainer() {
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name={loginpage} component={LoginScreen} options={{ headerShown: false }}  />
+          <Stack.Screen name={loginPage} component={LoginScreen} options={{ headerShown: false }}  />
           <Stack.Screen name={registration} component={Registration} /> 
         </Stack.Navigator>
       )}
