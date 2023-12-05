@@ -127,22 +127,22 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontWeight: '400',
+    //fontWeight: '400',
     marginBottom: 5,
   },
   email: {
     fontSize: 16,
     marginBottom: 10,
-    fontWeight:'300'
+    //fontWeight:'300'
   },
   genderAge: {
     fontSize: 16,
     marginBottom: 5,
-    fontWeight: '300'
+    //fontWeight: '300'
   },
   bio: {
     marginBottom: 10,
-    fontWeight: '300',
+    //fontWeight: '300',
     fontSize: 20,
   },
   btn: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 24,
     marginBottom: 5,
-    fontWeight: 300
+    //fontWeight: 300
   },
   trait: {
     backgroundColor: 'transparent', 
