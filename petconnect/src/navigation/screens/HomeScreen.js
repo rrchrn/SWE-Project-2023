@@ -1,19 +1,21 @@
+// import all necessary tools/components
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { Modal, StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import petProfiles from './images/petProfiles.json';
 import {auth, db} from '../../../firebase.ignore.js'
 import firebase from 'firebase/compat/app';
 
-const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
-const window = Dimensions.get('window');
+// trait colors for pet profiles
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; 
 
 export default function HomeScreen({ navigation }) {
+  // pet profiles and popup cards
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-  
   const currentPet = petProfiles[currentPetIndex];
 
+  // pet images
   const petImages = {
     'dog1.jpg': require('./images/dog1.jpg'),
     'dog2.jpg': require('./images/dog2.jpg'),
@@ -25,6 +27,7 @@ export default function HomeScreen({ navigation }) {
     'cat4.jpg': require('./images/cat4.jpg'),
   };
 
+  // functionality to show next pet
   const showNextPet = () => {
     if (currentPetIndex < petProfiles.length - 1) {
       setCurrentPetIndex(currentPetIndex + 1);
@@ -33,45 +36,47 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
+  // store pet profile to the cloud firestore 
   const handleLike = () => {
-    // Add the liked pet index to the 'likes' array
     const likedPetIndex = currentPetIndex;
   
-    // Get the current user
     const user = auth.currentUser;
   
     if (user) {
-      // Update Firestore document to add the liked pet index
       db.collection('users')
         .doc(user.uid)
         .update({
           likes: firebase.firestore.FieldValue.arrayUnion(likedPetIndex),
         })
         .then(() => {
-          console.log('Liked pet index added to Firestore');
-          showNextPet(); // Show the next pet after it has been liked
+          console.log('liked pet index added to Firestore');
+          showNextPet(); 
         })
         .catch((error) => {
-          console.error('Error adding liked pet index to Firestore: ', error);
+          console.error('rror: did not add: ', error);
         });
     } else {
-      console.error('No user is currently signed in.');
+      console.error('no user signed in');
     }
   };
   
 
+  // dislike a pet
   const handleDislike = () => {
     showNextPet();
   };
 
+  // popup card for pet profile
   const openModal = () => {
     setModalVisible(true);
   };
 
+  // close popup card
   const closeModal = () => {
     setModalVisible(false);
   };
 
+  // create the hoem page front end
   return (
     <View style={styles.container}>
       <Text style={styles.maintext}>PetConnect</Text>
@@ -99,11 +104,9 @@ export default function HomeScreen({ navigation }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* Image Container moved to the top */}
             <View style={styles.imageContainer}>
               <Image source={petImages[currentPet.image]} style={styles.modalPetImage} />
             </View>
-            {/* Text Container now comes after the Image Container */}
             <View style={styles.textContainer}>
               <Text style={styles.modalNameText}>{currentPet.name}</Text>
               <Text style={styles.modalText}>{currentPet.age}</Text>
@@ -130,6 +133,7 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
+// styling
 const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
@@ -208,7 +212,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     ...Platform.select({
       ios: {
-        width: '80%', // or any other specific dimension for iOS
+        width: '80%', 
         height: '60%',
       },
       android: {
@@ -216,37 +220,37 @@ const styles = StyleSheet.create({
         height: '60%',
       },
       web: {
-        width: '50%', // you might need a different dimension for web
+        width: '50%', 
         height: '80%',
       },
     }),
-    flexDirection: 'column', // Stack children vertically
-    justifyContent: 'space-between', // Distribute space between children
+    flexDirection: 'column', 
+    justifyContent: 'space-between', 
   },
   imageContainer: {
-    width: '100%', // Take full width of the modal
-    alignItems: 'center', // Center images horizontally
-    marginBottom: 20, // Space between image and text
+    width: '100%', 
+    alignItems: 'center', 
+    marginBottom: 20, 
     flex: 1
   },
   modalPetImage: {
-    width: 150, // Adjust as needed
-    height: 150, // Adjust as needed
+    width: 150,
+    height: 150, 
   },
   imageContainer: {
-    flex: 1, // Take half the space
-    alignItems: 'center', // Center images horizontally
-    justifyContent: 'center', // Center images vertically
+    flex: 1,
+    alignItems: 'center', 
+    justifyContent: 'center', 
   },
   textContainer: {
-    flex: 1, // Take the other half of the space
-    alignItems: 'center', // Align text to the start
-    justifyContent: 'center', // Center text vertically
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
   },
   modalPetImage: {
-    width: 150, // Adjust as needed
-    height: 150, // Adjust as needed
-    marginBottom: 50, // Space between images
+    width: 150, 
+    height: 150, 
+    marginBottom: 50, 
   },
   button: {
     borderRadius: 20,
@@ -267,24 +271,23 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   modalNameText: {
-    // This will specifically apply to the pet's name
     fontSize: 20,
-    fontWeight: '400', // Bold like 'nametext' style
+    fontWeight: '400', 
     textAlign:'center'
   },
   modalBioText: {
-    fontWeight: '300', // Lighter like 'text' style
-    marginTop: 15, // Larger space before the bio
-    marginBottom: 15, // Larger space after the bio
+    fontWeight: '300', 
+    marginTop: 15,
+    marginBottom: 15,
     textAlign: 'center',
     fontSize: 20
   },
   trait: {
-    backgroundColor: 'transparent', // this will be dynamically changed
-    borderRadius: 20, // circular edges
-    paddingHorizontal: 10, // horizontal padding
-    paddingVertical: 5, // vertical padding
-    margin: 4, // space between each trait
+    backgroundColor: 'transparent', 
+    borderRadius: 20, 
+    paddingHorizontal: 10, 
+    paddingVertical: 5, 
+    margin: 4, 
     alignItems: 'center',
     justifyContent: 'center',
   },

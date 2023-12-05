@@ -1,9 +1,10 @@
+// import all necessary tools/components
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image, Dimensions, Platform } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image, Platform } from 'react-native';
 import { auth, db } from '../../../firebase.ignore.js';
 import petProfiles from './images/petProfiles.json';
 
-// Image imports
+// pet images imports
 const petImages = {
   'dog1.jpg': require('./images/dog1.jpg'),
   'dog2.jpg': require('./images/dog2.jpg'),
@@ -15,15 +16,17 @@ const petImages = {
   'cat4.jpg': require('./images/cat4.jpg'),
 };
 
-const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
-const window = Dimensions.get('window');
+// trait colors for pet profiles
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; 
 
 export default function LikesPage({ navigation }) {
+  // liked profiles and their popupcards with scheduling
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [scheduleStatus, setScheduleStatus] = useState({}); // New state for managing schedule status
+  const [scheduleStatus, setScheduleStatus] = useState({}); 
 
+  // show the stored pet profiles
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
@@ -44,31 +47,34 @@ export default function LikesPage({ navigation }) {
     }
   }, []);
 
+  // pop up card
   const handleProfilePress = (profileId) => {
     const petInfo = petProfiles[profileId];
     setSelectedProfile({ ...petInfo, image: petImages[petInfo.image] });
     setModalVisible(true);
-      // Initialize schedule status for each availability time
     const initialScheduleStatus = {};
     Object.entries(petProfiles[profileId].availability || {}).forEach(([day, times]) => {
       times.forEach(time => {
-        initialScheduleStatus[`${day}_${time}`] = false; // false indicates not scheduled
+        initialScheduleStatus[`${day}_${time}`] = false; 
       });
     });
     setScheduleStatus(initialScheduleStatus);
   };
 
+  // scheduling funcitonality
   const handleScheduleTime = (day, time) => {
     setScheduleStatus(prev => ({
       ...prev, 
-      [`${day}_${time}`]: !prev[`${day}_${time}`] // Toggle the status
+      [`${day}_${time}`]: !prev[`${day}_${time}`] 
     }));
   };
   
+  // close popup card
   const closeModal = () => {
     setModalVisible(false);
   };  
 
+  // create the likes page front end
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -80,7 +86,6 @@ export default function LikesPage({ navigation }) {
           >
             <Image source={petImages[petProfiles[profileId].image]} style={styles.petImage} />
             <Text style={styles.modalNameText}>{petProfiles[profileId].name}</Text>
-            {/* Here you can add more profile details if you want them displayed in the list */}
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -133,7 +138,7 @@ export default function LikesPage({ navigation }) {
             </ScrollView>
             <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
-              onPress={closeModal} // Make sure this function is defined in your component
+              onPress={closeModal} 
             >
               <Text style={styles.textStyle}>Close</Text>
             </TouchableOpacity>
@@ -144,7 +149,7 @@ export default function LikesPage({ navigation }) {
   );
 }
 
-
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -157,19 +162,19 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: 'center',
-    marginBottom: 20, // Increase space between profiles
-    padding: 20, // Add padding inside the container
-    borderWidth: 1, // Add a border
-    borderColor: '#e1e1e1', // Light grey border color
-    borderRadius: 10, // Rounded corners for the border
-    width: '90%', // Make the container a bit larger
-    alignSelf: 'center', // Center the container
-    backgroundColor: '#fff', // White background for the container
-    shadowColor: '#000', // Shadow for elevation
+    marginBottom: 20, 
+    padding: 20, 
+    borderWidth: 1, 
+    borderColor: '#e1e1e1', 
+    borderRadius: 10, 
+    width: '90%', 
+    alignSelf: 'center', 
+    backgroundColor: '#fff', 
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 3, // Slight elevation for a subtle drop shadow
+    elevation: 3, 
   },
   petImage: {
     width: 125,
@@ -192,7 +197,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     ...Platform.select({
       ios: {
-        width: '90%', // or any other specific dimension for iOS
+        width: '90%', 
         height: '60%',
       },
       android: {
@@ -200,12 +205,12 @@ const styles = StyleSheet.create({
         height: '60%',
       },
       web: {
-        width: '50%', // you might need a different dimension for web
+        width: '50%', 
         height: '80%',
       },
     }),
-    flexDirection: 'column', // Stack children vertically
-    justifyContent: 'space-between', // Distribute space between children
+    flexDirection: 'column', 
+    justifyContent: 'space-between',
   },
   modalPetImage: {
     width: 150,
@@ -217,17 +222,16 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   scheduleButton: {
-    backgroundColor: '#befebb', // example color for available times
+    backgroundColor: '#befebb', 
     borderRadius: 20,
     paddingVertical: 5,
     paddingHorizontal: 10,
     alignSelf: 'center', 
-    marginHorizontal: 10, // space between buttons if needed
-    marginTop: 4, // space above the button
+    marginHorizontal: 10, 
+    marginTop: 4, 
   },
   pendingButton: {
-    // Similar styles as scheduleButton but with different backgroundColor
-    backgroundColor: '#fefbbb', // example color for pending times
+    backgroundColor: '#fefbbb', 
     borderRadius: 20,
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -244,8 +248,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   modalContentContainer: {
-    flexGrow: 1, // This ensures the content grows to fill the space
-    justifyContent: 'center', // Adjust this as per your design
+    flexGrow: 1, 
+    justifyContent: 'center', 
   },
   centeredView: {
     flex: 1,
@@ -253,23 +257,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   trait: {
-    backgroundColor: 'transparent', // this will be dynamically changed
-    borderRadius: 20, // rounded edges
-    paddingHorizontal: 10, // horizontal padding inside the oval
-    paddingVertical: 5, // vertical padding inside the oval
-    margin: 4, // space between each trait
+    backgroundColor: 'transparent', 
+    borderRadius: 20, 
+    paddingHorizontal: 10, 
+    paddingVertical: 5, 
+    margin: 4, 
     alignSelf: 'center'
   },
   modalNameText: {
-    // This will specifically apply to the pet's name
     fontSize: 20,
-    fontWeight: '400', // Bold like 'nametext' style
+    fontWeight: '400', 
     textAlign:'center'
   },
   modalBioText: {
-    fontWeight: '300', // Lighter like 'text' style
-    marginTop: 15, // Larger space before the bio
-    marginBottom: 15, // Larger space after the bio
+    fontWeight: '300', 
+    marginTop: 15, 
+    marginBottom: 15, 
     textAlign: 'center',
     fontSize: 20
   },
@@ -288,15 +291,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   traitsContainer: {
-    flexDirection: 'row', // aligns traits in a row
-    flexWrap: 'wrap', // allows traits to wrap to the next line
-    justifyContent: 'center', // aligns containers to the start of the flex direction
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    justifyContent: 'center', 
   },
   dayContainer: {
-    marginVertical: 5, // space between each day
+    marginVertical: 5, 
   },
   timeText: {
     fontWeight: '300',
-    marginRight: 10, // space between the time text and the button
+    marginRight: 10, 
   },
 });

@@ -1,3 +1,4 @@
+// import all necessary tools/components
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
 import { auth } from '../../../firebase.ignore.js';
@@ -15,10 +16,12 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+  // redirect to registration page
   const handleRegister = () => {
     navigation.navigate(registration);
   };
 
+  // login functionality  
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
@@ -29,6 +32,7 @@ const LoginScreen = () => {
       .catch(error => alert(error.message));
   };
 
+  // create the login screen front end
   return (
     <KeyboardAvoidingView style={styles.container} behavior='padding'>
       <View style={styles.inputcontainer}>
@@ -67,7 +71,7 @@ const LoginScreen = () => {
 
 export default LoginScreen;
 
-
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,8 +85,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     paddingTop: 1,
-    fontWeight: 'bold', // Added fontWeight for a bolder look
-    color: '#BBBEFE', // Added color for a vibrant look
+    fontWeight: 'bold', 
+    color: '#BBBEFE',
     
   },
   image: {
@@ -113,7 +117,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-   // fontWeight: 700,
     fontSize: 16,
 
   },
@@ -125,12 +128,11 @@ const styles = StyleSheet.create({
   },
   buttonOutlineText: {
     color: '#BBBEFE',
-   // fontWeight: 700,
     fontSize: 16,
 
   },
   line: {
-    borderBottomColor: '#BBBEFE', // Adjust color as needed
+    borderBottomColor: '#BBBEFE', 
     borderBottomWidth: 1,
     marginVertical: 10,
   }
