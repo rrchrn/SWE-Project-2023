@@ -20,6 +20,7 @@ export default function LikesPage({ navigation }) {
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [scheduleStatus, setScheduleStatus] = useState({}); // New state for managing schedule status
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -45,11 +46,26 @@ export default function LikesPage({ navigation }) {
     const petInfo = petProfiles[profileId];
     setSelectedProfile({ ...petInfo, image: petImages[petInfo.image] });
     setModalVisible(true);
+      // Initialize schedule status for each availability time
+    const initialScheduleStatus = {};
+    Object.entries(petProfiles[profileId].availability || {}).forEach(([day, times]) => {
+      times.forEach(time => {
+        initialScheduleStatus[`${day}_${time}`] = false; // false indicates not scheduled
+      });
+    });
+    setScheduleStatus(initialScheduleStatus);
   };
+
+  const handleScheduleTime = (day, time) => {
+    setScheduleStatus(prev => ({
+      ...prev, 
+      [`${day}_${time}`]: !prev[`${day}_${time}`] // Toggle the status
+    }));
+  };
+  
 
   return (
     <View style={styles.container}>
-      <Text>This is the Likes Page</Text>
       <ScrollView style={styles.scrollView}>
         {likedProfiles.map((profileId) => (
           <TouchableOpacity
@@ -70,27 +86,43 @@ export default function LikesPage({ navigation }) {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalView}>
-          {selectedProfile && (
-            <>
-              <Image source={selectedProfile.image} style={styles.modalPetImage} />
-              <Text style={styles.modalText}>Name: {selectedProfile.name}</Text>
-              <Text style={styles.modalText}>Age: {selectedProfile.age}</Text>
-              <Text style={styles.modalText}>Sex: {selectedProfile.sex}</Text>
-              <Text style={styles.modalText}>Bio: {selectedProfile.bio}</Text>
-              <Text style={styles.modalText}>Traits: {selectedProfile.traits.join(', ')}</Text>
-              <Text style={styles.modalText}>Availability:</Text>
-              {Object.entries(selectedProfile.availability || {}).map(([day, times]) => (
-                <Text key={day} style={styles.modalText}>{day}: {times.join(', ')}</Text>
-              ))}
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text>Close</Text>
-              </TouchableOpacity>
-            </>
-          )}
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <ScrollView style={styles.modalScrollView} contentContainerStyle={styles.modalContentContainer}>
+              {selectedProfile && (
+                <>
+                  <Image source={selectedProfile.image} style={styles.modalPetImage} />
+                  <Text style={styles.modalText}>Name: {selectedProfile.name}</Text>
+                  <Text style={styles.modalText}>Age: {selectedProfile.age}</Text>
+                  <Text style={styles.modalText}>Sex: {selectedProfile.sex}</Text>
+                  <Text style={styles.modalText}>Bio: {selectedProfile.bio}</Text>
+                  <Text style={styles.modalText}>Traits: {selectedProfile.traits.join(', ')}</Text>
+                  {Object.entries(selectedProfile.availability || {}).map(([day, times]) => (
+                    <View key={day}>
+                      <Text style={styles.modalText}>{day}:</Text>
+                      {times.map(time => (
+                        <View key={time} style={styles.timeSlotContainer}>
+                          <Text style={styles.modalText}>{time}</Text>
+                          <TouchableOpacity
+                            style={scheduleStatus[`${day}_${time}`] ? styles.pendingButton : styles.scheduleButton}
+                            onPress={() => handleScheduleTime(day, time)}
+                          >
+                            <Text>{scheduleStatus[`${day}_${time}`] ? 'Pending' : 'Schedule Playdate'}</Text>
+                          </TouchableOpacity>
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+                </>
+              )}
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     </View>
@@ -118,14 +150,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   modalView: {
-    alignSelf: 'center',
     width: '80%',
-    marginTop: 'auto',
-    marginBottom: 'auto',
+    maxHeight: '80%',
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
+    alignItems: 'center', // Align items in modal view to center
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -149,5 +179,52 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  scheduleButton: {
+    backgroundColor: '#2196F3',
+    padding: 5,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  pendingButton: {
+    backgroundColor: 'yellow',
+    padding: 5,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  timeSlotContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  modalScrollView: {
+    width: '100%',
+  },
+  modalContentContainer: {
+    flexGrow: 1, // This ensures the content grows to fill the space
+    justifyContent: 'center', // Adjust this as per your design
+  },
+  modalView: {
+    alignSelf: 'center',
+    width: '80%',
+    maxHeight: '80%', // Limit the height of the modal
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
