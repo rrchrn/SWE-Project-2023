@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   editBox: {
     marginBottom: 15,
-    width: 300, // Set a fixed width for the input boxes
+    width: 300, 
   },
   editLabel: {
     marginBottom: 5,

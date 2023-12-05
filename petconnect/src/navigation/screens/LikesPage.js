@@ -1,11 +1,10 @@
+// import all necessary tools/components
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Modal, Image, Platform } from 'react-native';
 import { auth, db } from '../../../firebase.ignore.js';
 import petProfiles from './images/petProfiles.json';
 
-// Image imports
+// pet images imports
 const petImages = {
   'dog1.jpg': require('./images/dog1.jpg'),
   'dog2.jpg': require('./images/dog2.jpg'),
@@ -17,13 +16,17 @@ const petImages = {
   'cat4.jpg': require('./images/cat4.jpg'),
 };
 
+// trait colors for pet profiles
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; 
 
 export default function LikesPage({ navigation }) {
+  // liked profiles and their popupcards with scheduling
   const [likedProfiles, setLikedProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [scheduleStatus, setScheduleStatus] = useState({}); // New state for managing schedule status
+  const [scheduleStatus, setScheduleStatus] = useState({}); 
 
+  // show the stored pet profiles
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
@@ -44,28 +47,34 @@ export default function LikesPage({ navigation }) {
     }
   }, []);
 
+  // pop up card
   const handleProfilePress = (profileId) => {
     const petInfo = petProfiles[profileId];
     setSelectedProfile({ ...petInfo, image: petImages[petInfo.image] });
     setModalVisible(true);
-      // Initialize schedule status for each availability time
     const initialScheduleStatus = {};
     Object.entries(petProfiles[profileId].availability || {}).forEach(([day, times]) => {
       times.forEach(time => {
-        initialScheduleStatus[`${day}_${time}`] = false; // false indicates not scheduled
+        initialScheduleStatus[`${day}_${time}`] = false; 
       });
     });
     setScheduleStatus(initialScheduleStatus);
   };
 
+  // scheduling funcitonality
   const handleScheduleTime = (day, time) => {
     setScheduleStatus(prev => ({
       ...prev, 
-      [`${day}_${time}`]: !prev[`${day}_${time}`] // Toggle the status
+      [`${day}_${time}`]: !prev[`${day}_${time}`] 
     }));
   };
   
+  // close popup card
+  const closeModal = () => {
+    setModalVisible(false);
+  };  
 
+  // create the likes page front end
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -76,8 +85,7 @@ export default function LikesPage({ navigation }) {
             onPress={() => handleProfilePress(profileId)}
           >
             <Image source={petImages[petProfiles[profileId].image]} style={styles.petImage} />
-            <Text>{petProfiles[profileId].name}</Text>
-            {/* Here you can add more profile details if you want them displayed in the list */}
+            <Text style={styles.modalNameText}>{petProfiles[profileId].name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -94,35 +102,45 @@ export default function LikesPage({ navigation }) {
               {selectedProfile && (
                 <>
                   <Image source={selectedProfile.image} style={styles.modalPetImage} />
-                  <Text style={styles.modalText}>Name: {selectedProfile.name}</Text>
-                  <Text style={styles.modalText}>Age: {selectedProfile.age}</Text>
-                  <Text style={styles.modalText}>Sex: {selectedProfile.sex}</Text>
-                  <Text style={styles.modalText}>Bio: {selectedProfile.bio}</Text>
-                  <Text style={styles.modalText}>Traits: {selectedProfile.traits.join(', ')}</Text>
-                  {Object.entries(selectedProfile.availability || {}).map(([day, times]) => (
-                    <View key={day}>
-                      <Text style={styles.modalText}>{day}:</Text>
-                      {times.map(time => (
-                        <View key={time} style={styles.timeSlotContainer}>
-                          <Text style={styles.modalText}>{time}</Text>
-                          <TouchableOpacity
-                            style={scheduleStatus[`${day}_${time}`] ? styles.pendingButton : styles.scheduleButton}
-                            onPress={() => handleScheduleTime(day, time)}
-                          >
-                            <Text>{scheduleStatus[`${day}_${time}`] ? 'Pending' : 'Schedule Playdate'}</Text>
-                          </TouchableOpacity>
-                        </View>
-                      ))}
-                    </View>
-                  ))}
+                  <Text style={styles.modalNameText}>{selectedProfile.name}</Text>
+                  <Text style={styles.modalText}>{selectedProfile.age}</Text>
+                  <Text style={styles.modalText}>{selectedProfile.sex}</Text>
+                  <Text style={styles.modalBioText}>{selectedProfile.bio}</Text>
+                  <View style={styles.traitsContainer}>
+                    {selectedProfile.traits.map((trait, index) => (
+                      <View key={index} style={[styles.trait, { backgroundColor: traitColors[index % traitColors.length] }]}>
+                        <Text>{trait}</Text>
+                      </View>
+                    ))}
+                  </View>
+                  {
+                    selectedProfile.availability && Object.entries(selectedProfile.availability).map(([day, times]) => (
+                      <View key={day} style={styles.dayContainer}>
+                        <Text style={styles.modalText}>{day}:</Text>
+                        {times.map((time, index) => (
+                          <View key={index} style={styles.timeSlotContainer}>
+                            <Text style={styles.timeText}>{time}</Text>
+                            <TouchableOpacity
+                              style={scheduleStatus[`${day}_${time}`] ? styles.pendingButton : styles.scheduleButton}
+                              onPress={() => handleScheduleTime(day, time)}
+                            >
+                              <Text style={styles.scheduleText}>
+                                {scheduleStatus[`${day}_${time}`] ? 'Pending' : 'Schedule Playdate'}
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        ))}
+                      </View>
+                    ))
+                  }
                 </>
               )}
             </ScrollView>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => setModalVisible(false)}
+              style={[styles.button, styles.buttonClose]}
+              onPress={closeModal} 
             >
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
+              <Text style={styles.textStyle}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -131,7 +149,7 @@ export default function LikesPage({ navigation }) {
   );
 }
 
-
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -144,90 +162,144 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 20, 
+    padding: 20, 
+    borderWidth: 1, 
+    borderColor: '#e1e1e1', 
+    borderRadius: 10, 
+    width: '90%', 
+    alignSelf: 'center', 
+    backgroundColor: '#fff', 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 3, 
   },
   petImage: {
-    width: 100,
-    height: 100,
+    width: 125,
+    height: 125,
     borderRadius: 50,
   },
   modalView: {
-    width: '80%',
-    maxHeight: '80%',
-    backgroundColor: "white",
+    margin: 20,
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center', // Align items in modal view to center
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    ...Platform.select({
+      ios: {
+        width: '90%', 
+        height: '60%',
+      },
+      android: {
+        width: '90%',
+        height: '60%',
+      },
+      web: {
+        width: '50%', 
+        height: '80%',
+      },
+    }),
+    flexDirection: 'column', 
+    justifyContent: 'space-between',
   },
   modalPetImage: {
     width: 150,
     height: 150,
     alignSelf: 'center'
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    backgroundColor: "#7076fd",
-    marginTop: 10
-  },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
+    fontWeight: '300'
   },
   scheduleButton: {
-    backgroundColor: '#befebb',
-    padding: 5,
-    borderRadius: 5,
-    marginLeft: 10,
+    backgroundColor: '#befebb', 
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignSelf: 'center', 
+    marginHorizontal: 10, 
+    marginTop: 4, 
   },
   pendingButton: {
-    backgroundColor: '#fefbbb',
-    padding: 5,
-    borderRadius: 5,
-    marginLeft: 10,
+    backgroundColor: '#fefbbb', 
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignSelf: 'center',
+    marginHorizontal: 10,
+    marginTop: 4,
   },
   timeSlotContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   modalScrollView: {
     width: '100%',
   },
   modalContentContainer: {
-    flexGrow: 1, // This ensures the content grows to fill the space
-    justifyContent: 'center', // Adjust this as per your design
-  },
-  modalView: {
-    alignSelf: 'center',
-    width: '80%',
-    maxHeight: '80%', // Limit the height of the modal
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
+    flexGrow: 1, 
+    justifyContent: 'center', 
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  trait: {
+    backgroundColor: 'transparent', 
+    borderRadius: 20, 
+    paddingHorizontal: 10, 
+    paddingVertical: 5, 
+    margin: 4, 
+    alignSelf: 'center'
+  },
+  modalNameText: {
+    fontSize: 20,
+    fontWeight: '400', 
+    textAlign:'center'
+  },
+  modalBioText: {
+    fontWeight: '300', 
+    marginTop: 15, 
+    marginBottom: 15, 
+    textAlign: 'center',
+    fontSize: 20
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 20
+  },
+  buttonClose: {
+    backgroundColor: '#7076fd',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  traitsContainer: {
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    justifyContent: 'center', 
+  },
+  dayContainer: {
+    marginVertical: 5, 
+  },
+  timeText: {
+    fontWeight: '300',
+    marginRight: 10, 
   },
 });
