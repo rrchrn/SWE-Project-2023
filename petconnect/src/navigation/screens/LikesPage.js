@@ -120,7 +120,7 @@ export default function LikesPage({ navigation }) {
               style={styles.button}
               onPress={() => setModalVisible(false)}
             >
-              <Text>Close</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -168,26 +168,27 @@ const styles = StyleSheet.create({
   modalPetImage: {
     width: 150,
     height: 150,
-    borderRadius: 75,
+    alignSelf: 'center'
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#2196F3"
+    backgroundColor: "#7076fd",
+    marginTop: 10
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
   },
   scheduleButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#befebb',
     padding: 5,
     borderRadius: 5,
     marginLeft: 10,
   },
   pendingButton: {
-    backgroundColor: 'yellow',
+    backgroundColor: '#fefbbb',
     padding: 5,
     borderRadius: 5,
     marginLeft: 10,
