@@ -5,7 +5,11 @@
         "sex": "Female",
         "image": "cat2.jpg",
         "bio": "hi! im emma! im a curious lil kitten who loves to explore!! :)",
-        "traits": ["Curious", "Adventurous", "Explorer"]
+        "traits": ["Curious", "Adventurous", "Explorer"],
+        "availability": {
+            "Monday": ["9:00 AM - 11:00 AM", "2:00 PM - 4:00 PM"],
+            "Tuesday": ["10:00 AM - 12:30 PM"]
+        }
     },
     {
         "name": "Darren",
@@ -13,7 +17,11 @@
         "sex": "Male",
         "image": "dog2.jpg",
         "bio": "HIYA. im SUUUUUUUPER playful and energetic! Lets go for long walks on the beach and play some fetch!!!",
-        "traits": ["Lovable", "Friendly", "Hyper"]
+        "traits": ["Lovable", "Friendly", "Hyper"],
+        "availability": {
+            "Wednesday": ["11:00 AM - 7:00 PM"],
+            "Thursday": ["11:00 AM - 1:00 PM", "5:00 PM - 7:00 PM"]
+        }
     },
     {
         "name": "Martin",
@@ -21,7 +29,14 @@
         "sex": "Male",
         "image": "cat1.jpg",
         "bio": "i like sunbathing and bird-watching :)",
-        "traits": ["Sleepy", "Lazy", "Chill"]
+        "traits": ["Sleepy", "Lazy", "Chill"],
+        "availability": {
+            "Monday": ["6:00 PM - 9:00 PM"],
+            "Tuesday": ["6:00 PM - 9:00 PM"],
+            "Wednesday": ["6:00 PM - 9:00 PM"],
+            "Thursday": ["6:00 PM - 9:00 PM"],
+            "Friday": ["6:00 PM - 9:00 PM"]
+        }
     },
     {
         "name": "Buddy",
@@ -29,7 +44,11 @@
         "sex": "Male",
         "image": "dog1.jpg",
         "bio": "hi im buddy! if u hate taking baths like me we'll get along :D",
-        "traits": ["Playful", "Energetic", "Loves walks"]
+        "traits": ["Playful", "Energetic", "Loves walks"],
+        "availability": {
+            "Saturday": ["9:30 AM - 5:30 PM"],
+            "Sunday": ["1:00 PM - 3:00 PM", "5:00 PM - 7:00 PM"]
+        }
     },
     {
         "name": "Lily",
@@ -37,7 +56,12 @@
         "sex": "Female",
         "image": "dog3.jpg",
         "bio": "GIMME ALL YOUR FOOOD AHHHHHHHHHMMMM",
-        "traits": ["Hungry", "Chill", "Friendly"]
+        "traits": ["Hungry", "Chill", "Friendly"],
+        "availability": {
+            "Monday": ["5:00 PM - 8:00 PM"],
+            "Wednesday": ["5:00 PM - 8:00 PM"],
+            "Friday": ["5:00 PM - 8:00 PM"]
+        }
     },
     {
         "name": "Jennifer",
@@ -45,7 +69,11 @@
         "sex": "Female",
         "image": "cat3.jpg",
         "bio": "I'm just here to find a chill pal.",
-        "traits": ["Sleepy", "Chill", "Lovable"]
+        "traits": ["Sleepy", "Chill", "Lovable"],
+        "availability": {
+            "Saturday": ["11:00 AM - 1:30 PM", "4:00 PM - 6:00 PM"],
+            "Sunday": ["11:00 AM - 1:30 PM", "4:00 PM - 6:00 PM"]
+        }
     },
     {
         "name": "Ashley",
@@ -53,7 +81,12 @@
         "sex": "Female",
         "image": "dog4.jpg",
         "bio": "im super duper cool",
-        "traits": ["Cool", "Stylish", "Chill"]
+        "traits": ["Cool", "Stylish", "Chill"],
+        "availability": {
+            "Tuesday": ["5:00 PM - 9:00 PM"],
+            "Wednesday": ["5:00 PM - 9:00 PM"],
+            "Thursday": ["5:00 PM - 9:00 PM"]
+        }
     },
     {
         "name": "James",
@@ -61,6 +94,11 @@
         "sex": "Male",
         "image": "cat4.jpg",
         "bio": "Hello there. I like to make friends with all kinds of pets.",
-        "traits": ["Kind", "Respectful", "Lovable"]
+        "traits": ["Kind", "Respectful", "Lovable"],
+        "availability": {
+            "Tuesday": ["5:30 PM - 8:00 PM"],
+            "Thursday": ["5:30 PM - 8:00 PM"],
+            "Friday": ["1:00 PM - 4:00 PM", "6:30 PM - 9:00 PM"]
+        }
     }
 ]
