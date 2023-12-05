@@ -1,3 +1,4 @@
+// import all necessary tools/components
 import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
@@ -5,17 +6,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// Screens
+// all the app screens
 import HomeScreen from './screens/HomeScreen.js';
 import UserProfile from './screens/UserProfile.js';
 import ChatPage from './screens/ChatPage.js';
 import EditPage from './screens/EditUserProfile.js';
 import LikesPage from './screens/LikesPage.js';
-import LoginScreen from './screens/LoginScreen.js'; // Import the LoginScreen
+import LoginScreen from './screens/LoginScreen.js'; 
 import Registration from './screens/Registration.js';
 import { auth } from '../../firebase.ignore.js';
 
-// Screen names
+// screens
 const homeName = 'Home';
 const userPageName = 'User';
 const chatName = 'Chat';
@@ -25,16 +26,16 @@ const loginPage = 'PetConnect';
 const registration = 'Registration';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator(); // Create a Stack.Navigator
+const Stack = createStackNavigator(); 
 
 export default function MainContainer() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  // 
+  // have to be logged in to use the app
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
+        setIsLoggedIn(true); 
       } else {
         setIsLoggedIn(false);
       }
@@ -43,9 +44,10 @@ export default function MainContainer() {
     return unsubscribe;
   }, []);
 
+  // navigation bar
   return (
     <NavigationContainer>
-      {isLoggedIn ? ( // Conditional rendering based on the login status
+      {isLoggedIn ? ( 
         <Tab.Navigator
           initialRouteName={homeName}
           screenOptions={({ route }) => ({
@@ -63,7 +65,6 @@ export default function MainContainer() {
               return <Ionicons name={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: '#7076fd',
-            //tabBarStyle: {backgroundColor: '#edeeff'}
           })}>
           <Tab.Screen name={homeName} component={HomeScreen} />
           <Tab.Screen name={likesName} component={LikesPage} />
@@ -71,7 +72,6 @@ export default function MainContainer() {
           <Tab.Screen name={editUser} component={EditPage} options={{ tabBarButton: () => null }} />
         </Tab.Navigator>
       ) : (
-        // Render the LoginScreen using a Stack.Navigator
         <Stack.Navigator>
           <Stack.Screen name={loginPage} component={LoginScreen} options={{ headerShown: false }}  />
           <Stack.Screen name={registration} component={Registration} /> 

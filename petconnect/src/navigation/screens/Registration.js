@@ -1,3 +1,4 @@
+// import all necessary tools/components
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {auth, db} from '../../../firebase.ignore.js'
@@ -5,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 
 
 const Registration = () => {
+    // the registered users information/data
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [name, setName] = useState('')
@@ -12,6 +14,7 @@ const Registration = () => {
     const [gender, setGender] = useState('')
   
 
+    // sign up functionality using firebase
     const handleSignUp = () => {
       auth
         .createUserWithEmailAndPassword(email, password)
@@ -19,14 +22,13 @@ const Registration = () => {
           const user = userCredentials.user;
           console.log('Registered ' + user.email);
 
-          // Create a user document in the "users" collection
           db.collection('users')
             .doc(user.uid)
             .set({
               name: name,
               age: age,
               gender: gender,
-              likes: [], // Initialize likes as an empty array
+              likes: [], 
               email: email,
             })
             .then(() => {
@@ -40,7 +42,7 @@ const Registration = () => {
     };
 
 
-
+  // create the registration front end
   return (
    <KeyboardAvoidingView
       style={styles.container} 
@@ -105,6 +107,7 @@ const Registration = () => {
 
 export default Registration;
 
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -118,8 +121,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     paddingTop: 5,
-    fontWeight: 'bold', // Added fontWeight for a bolder look
-    color: '#BBBEFE', // Added color for a vibrant look
+    fontWeight: 'bold', 
+    color: '#BBBEFE', 
     
   },
   image: {
@@ -150,7 +153,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-   // fontWeight: 700,
     fontSize: 16,
 
   },
@@ -162,12 +164,11 @@ const styles = StyleSheet.create({
   },
   buttonOutlineText: {
     color: '#BBBEFE',
-   // fontWeight: 700,
     fontSize: 16,
 
   },
   line: {
-    borderBottomColor: '#BBBEFE', // Adjust color as needed
+    borderBottomColor: '#BBBEFE', 
     borderBottomWidth: 1,
     marginVertical: 10,
   }
