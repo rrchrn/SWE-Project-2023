@@ -192,11 +192,11 @@ const styles = StyleSheet.create({
     elevation: 5,
     ...Platform.select({
       ios: {
-        width: '85%', // or any other specific dimension for iOS
+        width: '90%', // or any other specific dimension for iOS
         height: '60%',
       },
       android: {
-        width: '80%',
+        width: '90%',
         height: '60%',
       },
       web: {
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   modalNameText: {
     // This will specifically apply to the pet's name
     fontSize: 20,
-    fontWeight: '475', // Bold like 'nametext' style
+    fontWeight: '400', // Bold like 'nametext' style
     textAlign:'center'
   },
   modalBioText: {

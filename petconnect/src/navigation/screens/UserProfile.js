@@ -4,6 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { auth, db } from "../../../firebase.ignore";
 
+const traitColors = ['#bbfefb', '#febbbe', '#fefbbb']; // New colors for the ovals
+
 export default function UserProfile({ navigation }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,23 +74,22 @@ export default function UserProfile({ navigation }) {
         <Image source={mainImage} style={styles.mainImage} />
 
         {/* Existing user data display */}
-        <Text style={styles.name}>{userData.name}, {userData.age.toString()}</Text>
+        <Text style={styles.name}>{userData.name}</Text>
+        <Text style={styles.genderAge}>{userData.age.toString()} years</Text>
+        <Text style={styles.genderAge}>{userData.gender}</Text>
         <Text style={styles.email}>{userData.email}</Text>
-        <Text style={styles.gender}>Gender: {userData.gender}</Text>
-
-        {/* Buttons */}
-        <View style={styles.btnWrapper}>
-          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Edit')}>
-            <Text style={styles.btnText}>Edit Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
-            <Text style={styles.btnText}>View Likes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btn} onPress={handleSignOut}>
-            <Text style={styles.btnText}>Sign Out</Text>
-          </TouchableOpacity>
+        <Text style={styles.bio}>WOOF WOOF! Let's be friends!!!</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <View style={[styles.trait, { backgroundColor: traitColors[0] }]}>
+          <Text>Happy</Text>
         </View>
-
+        <View style={[styles.trait, { backgroundColor: traitColors[1] }]}>
+          <Text>Funny</Text>
+        </View>
+        <View style={[styles.trait, { backgroundColor: traitColors[2] }]}>
+          <Text>Excited</Text>
+        </View>
+      </View>
         {/* Section title for photos */}
         <Text style={styles.photoSectionTitle}>Photos</Text>
 
@@ -97,6 +98,16 @@ export default function UserProfile({ navigation }) {
           {images.map((image, index) => (
             <Image key={index} source={image} style={styles.photoItem} />
           ))}
+        </View>
+        
+        {/* Buttons */}
+        <View style={styles.btnWrapper}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Likes')}> 
+            <Text style={styles.btnText}>View Likes</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={handleSignOut}>
+            <Text style={styles.btnText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -114,28 +125,37 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontWeight: '400',
+    marginBottom: 5,
   },
   email: {
     fontSize: 16,
     marginBottom: 10,
+    fontWeight:'300'
   },
-  gender: {
+  genderAge: {
     fontSize: 16,
+    marginBottom: 5,
+    fontWeight: '300'
+  },
+  bio: {
     marginBottom: 10,
+    fontWeight: '300',
+    fontSize: 20,
   },
   btn: {
-    borderColor: '#B200ED',
+    borderColor: '#7076fd',
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
     marginBottom: 10,
+    backgroundColor: '#7076fd',
+    marginTop: 20
   },
   btnText: {
-    color: '#B200ED',
+    color: 'white',
   },
   btnWrapper: {
     flexDirection: 'row',
@@ -156,12 +176,23 @@ const styles = StyleSheet.create({
   photoGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
     marginTop: 10,
+    justifyContent: 'center',
   },
   photoSectionTitle: {
     alignSelf: 'center',
     fontSize: 24,
-    marginBottom: 10,
+    marginBottom: 5,
+    fontWeight: 300
+  },
+  trait: {
+    backgroundColor: 'transparent', // this will be dynamically changed
+    borderRadius: 20, // circular edges
+    paddingHorizontal: 10, // horizontal padding
+    paddingVertical: 5, // vertical padding
+    margin: 4, // space between each trait
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15
   },
 });
