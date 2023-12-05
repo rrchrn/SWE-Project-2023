@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 20,
     textAlign: 'left',
-    fontWeight: '500'
+    fontWeight: '475'
   },
   text: {
     textAlign: 'left',
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   modalNameText: {
     // This will specifically apply to the pet's name
     fontSize: 20,
-    fontWeight: '500', // Bold like 'nametext' style
+    fontWeight: '475', // Bold like 'nametext' style
     textAlign:'center'
   },
   modalBioText: {
