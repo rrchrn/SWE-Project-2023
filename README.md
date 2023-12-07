@@ -1,7 +1,10 @@
 # PetConnect
-#step 1 open code
-#step 2 cd to SWE-Project-2023
-#step 3 cd to petconnect
-#step 4 npx expo start
-#step 5 open android studio and then the emulator
-#step 6 press a to open android
+
+Steps to run PetConnect:
+
+1. Open the code.
+2. Change directory to SWE-Project-2023.
+3. Navigate to the 'petconnect' directory.
+4. Run the command: `npx expo start`.
+5. Open Android Studio and launch the emulator.
+6. Press 'a' to open the Android application.
